@@ -1,0 +1,49 @@
+diff --git a/node_modules/react-native-screens/windows/RNScreens/RNScreens.vcxproj b/node_modules/react-native-screens/windows/RNScreens/RNScreens.vcxproj
+index 95290ed..d6f6d6a 100644
+--- a/node_modules/react-native-screens/windows/RNScreens/RNScreens.vcxproj
++++ b/node_modules/react-native-screens/windows/RNScreens/RNScreens.vcxproj
+@@ -13,13 +13,16 @@
+     <AppContainerApplication>true</AppContainerApplication>
+     <ApplicationType>Windows Store</ApplicationType>
+     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+-    <WindowsTargetPlatformVersion Condition=" '$(WindowsTargetPlatformVersion)' == '' ">10.0.18362.0</WindowsTargetPlatformVersion>
+-    <WindowsTargetPlatformMinVersion>10.0.16299.0</WindowsTargetPlatformMinVersion>
+   </PropertyGroup>
+-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+   <PropertyGroup Label="ReactNativeWindowsProps">
+     <ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'node_modules\react-native-windows\package.json'))\node_modules\react-native-windows\</ReactNativeWindowsDir>
+   </PropertyGroup>
++  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.WindowsSdk.Default.props" Condition="Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.WindowsSdk.Default.props')" />
++  <PropertyGroup Label="Fallback Windows SDK Versions">
++   <WindowsTargetPlatformVersion Condition=" '$(WindowsTargetPlatformVersion)' == '' ">10.0.18362.0</WindowsTargetPlatformVersion>
++   <WindowsTargetPlatformMinVersion Condition=" '$(WindowsTargetPlatformMinVersion)' == '' ">10.0.16299.0</WindowsTargetPlatformMinVersion>
++  </PropertyGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+   <ItemGroup Label="ProjectConfigurations">
+     <ProjectConfiguration Include="Debug|ARM">
+       <Configuration>Debug</Configuration>
+diff --git a/node_modules/react-native-screens/windows/RNScreens/ScreenStack.cpp b/node_modules/react-native-screens/windows/RNScreens/ScreenStack.cpp
+index 2d56bbf..5267747 100644
+--- a/node_modules/react-native-screens/windows/RNScreens/ScreenStack.cpp
++++ b/node_modules/react-native-screens/windows/RNScreens/ScreenStack.cpp
+@@ -35,6 +35,10 @@ void ScreenStack::removeAllChildren() {
+ 
+ void ScreenStack::removeChildAt(int64_t index) {
+   m_children.RemoveAt(static_cast<uint32_t>(index));
++  if (index >= m_children.Size()) {
++    auto uiElement = m_children.GetAt(m_children.Size() - 1);
++    Content(uiElement);
++  }
+ }
+ 
+ void ScreenStack::replaceChild(
+@@ -45,5 +49,9 @@ void ScreenStack::replaceChild(
+     return;
+ 
+   m_children.SetAt(index, newChild);
++  if (index == m_children.Size() - 1) {
++    auto uiElement = m_children.GetAt(m_children.Size() - 1);
++    Content(uiElement);
++  }
+ }
+ } // namespace winrt::RNScreens::implementation
