@@ -33,6 +33,7 @@ import {XamlExamplePage} from '../src/examples/XamlExamplePage';
 //import {TrackPlayerExamplePage} from '../src/examples/TrackPlayerExamplePage';
 import {WindowsHelloExamplePage} from '../src/examples/WindowsHelloExamplePage';
 import {ExpanderExamplePage} from '../src/examples/ExpanderExamplePage';
+import {NetworkExamplePage} from '../src/examples/NetworkExamplePage';
 import {View} from 'react-native';
 
 function Control(props) {
@@ -104,6 +105,14 @@ test('Flyout Example Page', () => {
 test('Image Example Page', () => {
   const tree = create(<ImageExamplePage />).toJSON();
   expect(tree).toMatchSnapshot();
+});
+
+test('Networking Example Page', async () => {
+  let tree;
+  await act(() => {
+    tree = create(<NetworkExamplePage />);
+  });
+  expect(tree.toJSON()).toMatchSnapshot();
 });
 
 test('Picker Example Page', () => {

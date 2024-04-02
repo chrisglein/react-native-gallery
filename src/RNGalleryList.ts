@@ -35,6 +35,7 @@ import {TrackPlayerExamplePage} from './examples/TrackPlayerExamplePage';
 import {WindowsHelloExamplePage} from './examples/WindowsHelloExamplePage';
 import {ExpanderExamplePage} from './examples/ExpanderExamplePage';
 import {VirtualizedListExamplePage} from './examples/VirtualizedListExamplePage';
+import {NetworkExamplePage} from './examples/NetworkExamplePage';
 
 interface IRNGalleryExample {
   key: string;
@@ -109,6 +110,12 @@ export const RNGalleryList: Array<IRNGalleryExample> = [
     component: ImageExamplePage,
     icon: '\uEB9F',
     type: 'Media',
+  },
+  {
+    key: 'Networking',
+    component: NetworkExamplePage,
+    icon: '\uE704',
+    type: 'Status and Info',
   },
   {
     key: 'Permissions',
