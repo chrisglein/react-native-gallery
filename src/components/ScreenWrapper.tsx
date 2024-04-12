@@ -4,9 +4,9 @@ import {
   StyleSheet,
   TouchableHighlight,
   Text,
+  PlatformColor,
   Pressable,
 } from 'react-native';
-import {PlatformColor} from 'react-native';
 import {useNavigation, DrawerActions} from '@react-navigation/native';
 
 const styles = StyleSheet.create({
@@ -14,13 +14,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
     height: '100%',
+    backgroundColor: '#f9f9f9', // PlatformColor('SolidBackgroundFillColorBaseBrush'),
+  },
+  navBar: {
+    backgroundColor: PlatformColor('NavigationViewDefaultPaneBackground'),
+    width: 48,
+    height: '100%',
+    paddingBottom: 20,
   },
   navItem: {
     flexGrow: 1,
     flexShrink: 1,
     height: '100%',
     alignSelf: 'stretch',
-    paddingLeft: 15,
+    borderTopLeftRadius: 8,
+    borderColor: PlatformColor('SurfaceStrokeColorFlyoutBrush'),
+    borderLeftWidth: 1,
   },
   menu: {
     margin: 5,
@@ -51,12 +60,7 @@ export function ScreenWrapper({children}) {
         /*accessibilityState={{
           expanded: useIsDrawerOpen(),
         }}*/
-        style={{
-          backgroundColor: PlatformColor('NavigationViewDefaultPaneBackground'),
-          width: 48,
-          height: '100%',
-          paddingBottom: 20,
-        }}
+        style={styles.navBar}
         onPress={() => {
           navigation.dispatch(DrawerActions.openDrawer());
         }}>

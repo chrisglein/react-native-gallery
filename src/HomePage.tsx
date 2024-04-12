@@ -1,10 +1,11 @@
 'use strict';
-import {StyleSheet, View, Text, Pressable} from 'react-native';
+import {StyleSheet, View, Text, Pressable, ScrollView, Image} from 'react-native';
 import React from 'react';
 import {useTheme, useIsFocused} from '@react-navigation/native';
 import RNGalleryList from './RNGalleryList';
-import {ScrollView} from 'react-native';
 import {ScreenWrapper} from './components/ScreenWrapper';
+import {TileGallery} from './TileGallery';
+import LinearGradient from 'react-native-linear-gradient';
 
 const createStyles = (colors: any) =>
   StyleSheet.create({
@@ -21,21 +22,11 @@ const createStyles = (colors: any) =>
     },
     container: {
       padding: 10,
+      paddingBottom: 40,
+      paddingLeft: 24,
       alignSelf: 'stretch',
       height: '100%',
       alignContent: 'flex-start',
-      paddingBottom: 40,
-    },
-    title: {
-      fontWeight: '200',
-      fontSize: 26,
-      marginTop: 20,
-      marginBottom: 10,
-      color: colors.text,
-    },
-    description: {
-      paddingRight: 20,
-      color: colors.text,
     },
     scrollView: {
       paddingRight: 20,
@@ -51,7 +42,69 @@ const createStyles = (colors: any) =>
       paddingRight: 10,
       paddingLeft: 10,
     },
+    heroGradient : {
+      position: 'absolute',
+      width: '100%',
+      height: '100%',
+    },
+    heroBackgroundImage: {
+      position: 'absolute',
+      resizeMode: 'cover',
+      width: '100%',
+      height: '99%',
+      opacity: 0.9,
+    },
+    pageHeader: {
+      paddingLeft: 36,
+    },
+    pageTitleContainer: {
+      height: 204,
+      justifyContent: 'center',
+    },
+    pageTitle: {
+      // https://github.com/microsoft/WinUI-Gallery/blob/c3cf8db5607c71f5df51fd4eb45d0ce6e932d338/WinUIGallery/HomePage.xaml#L82
+      // TitleLargeTextBlockStyle
+      fontSize: 40,
+      fontWeight: "600", // SemiBold
+    },
   });
+
+  
+const PageTitle = () => {
+  const {colors} = useTheme();
+  const styles = createStyles(colors);
+
+  return (
+    // https://github.com/microsoft/WinUI-Gallery/blob/c3cf8db5607c71f5df51fd4eb45d0ce6e932d338/WinUIGallery/Controls/HomePageHeaderImage.xaml#L19
+    <View>
+      <LinearGradient
+        start={{x: 0.5, y: 0}}
+        end={{x: 0.5, y: 1}}
+        colors={['#CED8E4', '#D5DBE3']}
+        style={styles.heroGradient}/>
+      <Image
+        source={require('../assets/GalleryHeaderImage.png')}
+        style={styles.heroBackgroundImage}/>
+      <LinearGradient
+        start={{x: 0, y: 0.5}}
+        end={{x: 0, y: 1.5}}
+        colors={['#f9f9f900', '#f9f9f9FF']}
+        style={styles.heroGradient}/>
+      <View style={styles.pageHeader}>
+        <View style={styles.pageTitleContainer}>
+          <Text
+            accessible
+            accessibilityRole={'header'}
+            style={styles.pageTitle}>
+            React Native Gallery
+          </Text>
+        </View>
+        <TileGallery/>
+      </View>
+    </View>
+  );
+};
+  
 
 const HomeContainer = (props: {heading: string; children: React.ReactNode}) => {
   const {colors} = useTheme();
@@ -147,7 +200,7 @@ const RenderPageContent = ({navigation}) => {
     }
   }
   return (
-    <ScrollView>
+    <View>
       <HomeContainer heading="Basic Input">
         {RenderHomeComponentTiles(basicInput, navigation)}
       </HomeContainer>
@@ -169,7 +222,7 @@ const RenderPageContent = ({navigation}) => {
       <HomeContainer heading="Media">
         {RenderHomeComponentTiles(media, navigation)}
       </HomeContainer>
-    </ScrollView>
+    </View>
   );
 };
 
@@ -180,15 +233,13 @@ export const HomePage: React.FunctionComponent<{}> = ({navigation}) => {
 
   return isScreenFocused ? (
     <View>
-      <ScreenWrapper style={styles.container}>
-        <Text accessible accessibilityRole={'header'} style={styles.title}>
-          Welcome to React Native Gallery!
-        </Text>
-        <Text style={styles.description}>
-          React Native Gallery is a React Native Windows application which
-          displays the range of React Native components with Windows support.
-        </Text>
-        <RenderPageContent navigation={navigation} />
+      <ScreenWrapper>
+        <ScrollView>
+          <PageTitle/>
+          <View style={styles.container}>
+            <RenderPageContent navigation={navigation}/>
+          </View>
+        </ScrollView>
       </ScreenWrapper>
     </View>
   ) : (
