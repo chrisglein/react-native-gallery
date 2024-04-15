@@ -92,19 +92,19 @@ const TileGallery = () => {
       title="Getting started"
       description="An overview of app development options, tools, and samples."
       link="https://learn.microsoft.com/windows/apps/get-started/https://aka.ms/reactnative">
-      <Image source={require('../assets/Header-WinUIGallery.png')} style={{width: 56, height: 56}}/>
+      <Image source={require('../assets/HomeHeaderTiles/Header-WinUIGallery.png')} style={{width: 56, height: 56}}/>
     </HeaderTile>,
     <HeaderTile
       title="React Native"
       description="Website for React Native for Desktop."
       link="https://aka.ms/reactnative">
-      <Image source={require('../assets/tiny_logo.png')} style={{width: 64, height: 64}}/>
+      <Image source={require('../assets/HomeHeaderTiles/tiny_logo.png')} style={{width: 64, height: 64}}/>
     </HeaderTile>,
     <HeaderTile
       title="Windows design"
       description="Design guidelines and toolkits for creating native app experiences."
       link="https://learn.microsoft.com/windows/apps/design/">
-      <Image source={require('../assets/Header-WindowsDesign.png')} style={{width: 64, height: 64}}/>
+      <Image source={require('../assets/HomeHeaderTiles/Header-WindowsDesign.png')} style={{width: 64, height: 64}}/>
     </HeaderTile>,
     <HeaderTile
       title="GitHub"
@@ -135,7 +135,7 @@ const TileGallery = () => {
       title="Partner Center"
       description="Upload your app to the Store."
       link="https://developer.microsoft.com/windows/">
-      <Image source={require('../assets/Header-Store.light.png')} style={{width: 64, height: 64}}/>
+      <Image source={require('../assets/HomeHeaderTiles/Header-Store.light.png')} style={{width: 64, height: 64}}/>
     </HeaderTile>
   ];
 
