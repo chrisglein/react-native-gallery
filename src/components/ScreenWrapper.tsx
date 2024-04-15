@@ -1,4 +1,5 @@
 import React from 'react';
+import type {PropsWithChildren} from 'react';
 import {
   View,
   StyleSheet,
@@ -31,6 +32,9 @@ const styles = StyleSheet.create({
     borderColor: PlatformColor('SurfaceStrokeColorFlyoutBrush'),
     borderLeftWidth: 1,
   },
+  insetNavItem: {
+    paddingLeft: 36,
+  },
   menu: {
     margin: 5,
     height: 34,
@@ -46,8 +50,10 @@ const styles = StyleSheet.create({
   },
 });
 
-// @ts-ignore
-export function ScreenWrapper({children}) {
+type ScreenWrapperProps = React.PropsWithChildren<{
+  doNotInset?: boolean,
+}>;
+export function ScreenWrapper({children, doNotInset}: ScreenWrapperProps): JSX.Element {
   const navigation = useNavigation();
 
   return (
@@ -80,7 +86,9 @@ export function ScreenWrapper({children}) {
           </TouchableHighlight>
         </View>
       </Pressable>
-      <View style={styles.navItem}>{children}</View>
+      <View style={[styles.navItem, doNotInset ? {} : styles.insetNavItem]}>
+        {children}
+      </View>
     </View>
   );
 }

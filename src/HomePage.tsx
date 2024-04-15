@@ -23,7 +23,7 @@ const createStyles = (colors: any) =>
     container: {
       padding: 10,
       paddingBottom: 40,
-      paddingLeft: 24,
+      paddingLeft: 36,
       alignSelf: 'stretch',
       height: '100%',
       alignContent: 'flex-start',
@@ -119,7 +119,12 @@ const HomeContainer = (props: {heading: string; children: React.ReactNode}) => {
   );
 };
 
-const HomeComponentTile = (props: {index: number; navigation}) => {
+type HomeComponentTileProps = {
+  pageKey: string;
+  pageIcon: string;
+  navigation: any;
+};
+const HomeComponentTile = ({pageKey, pageIcon, navigation}: HomeComponentTileProps) => {
   const {colors} = useTheme();
   const styles = createStyles(colors);
 
@@ -127,12 +132,12 @@ const HomeComponentTile = (props: {index: number; navigation}) => {
     <Pressable
       accessibilityRole="button"
       accessibilityLabel={
-        RNGalleryList[props.index].key === 'Button'
+        pageKey === 'Button'
           ? 'Button1 control'
-          : RNGalleryList[props.index].key + ' control'
+          : pageKey + ' control'
       }
       accessibilityHint={
-        'click to view the ' + RNGalleryList[props.index].key + ' sample page'
+        'click to view the ' + pageKey + ' sample page'
       }
       style={({pressed}) => [
         {
@@ -150,11 +155,11 @@ const HomeComponentTile = (props: {index: number; navigation}) => {
         },
       ]}
       onPress={() => {
-        props.navigation.navigate(RNGalleryList[props.index].key);
+        navigation.navigate(pageKey);
       }}>
-      <Text style={styles.icon}>{RNGalleryList[props.index].icon}</Text>
+      <Text style={styles.icon}>{pageIcon}</Text>
       <Text style={[styles.text, {paddingRight: 10}]}>
-        {RNGalleryList[props.index].key}
+        {pageKey}
       </Text>
     </Pressable>
   );
@@ -163,10 +168,12 @@ const HomeComponentTile = (props: {index: number; navigation}) => {
 const RenderHomeComponentTiles = (indicies: number[], navigation) => {
   var homeComponentTiles = [];
   for (var i = 0; i < indicies.length; i++) {
+    let index = indicies[i];
     homeComponentTiles.push(
       <HomeComponentTile
         key={indicies[i]}
-        index={indicies[i]}
+        pageKey={RNGalleryList[index].key}
+        pageIcon={RNGalleryList[index].icon}
         navigation={navigation}
       />,
     );
@@ -175,53 +182,35 @@ const RenderHomeComponentTiles = (indicies: number[], navigation) => {
 };
 
 const RenderPageContent = ({navigation}) => {
-  var basicInput = [];
-  var dateAndTime = [];
-  var dialogsAndFlyouts = [];
-  var layout = [];
-  var text = [];
-  var statusAndInfo = [];
-  var media = [];
-  for (var i = 0; i < RNGalleryList.length; i++) {
-    if (RNGalleryList[i].type === 'Basic Input') {
-      basicInput.push(i);
-    } else if (RNGalleryList[i].type === 'Date and Time') {
-      dateAndTime.push(i);
-    } else if (RNGalleryList[i].type === 'Dialogs and Flyouts') {
-      dialogsAndFlyouts.push(i);
-    } else if (RNGalleryList[i].type === 'Layout') {
-      layout.push(i);
-    } else if (RNGalleryList[i].type === 'Text') {
-      text.push(i);
-    } else if (RNGalleryList[i].type === 'Status and Info') {
-      statusAndInfo.push(i);
-    } else if (RNGalleryList[i].type === 'Media') {
-      media.push(i);
-    }
-  }
+  let categories = [
+    'Basic Input',
+    'Date and Time',
+    'Dialogs and Flyouts',
+    'Layout',
+    'Text',
+    'Status and Info',
+    'Media',
+  ];
+  let categoryMap = new Map();
+  categories.forEach((category) => {
+    categoryMap.set(category, []);
+  });
+
+  RNGalleryList.forEach((item, index) => {
+    let category = item.type;
+    let categoryList = categoryMap.get(category);
+    categoryList?.push(index);
+  });
+  
   return (
     <View>
-      <HomeContainer heading="Basic Input">
-        {RenderHomeComponentTiles(basicInput, navigation)}
-      </HomeContainer>
-      <HomeContainer heading="Date and Time">
-        {RenderHomeComponentTiles(dateAndTime, navigation)}
-      </HomeContainer>
-      <HomeContainer heading="Dialogs and Flyouts">
-        {RenderHomeComponentTiles(dialogsAndFlyouts, navigation)}
-      </HomeContainer>
-      <HomeContainer heading="Layout">
-        {RenderHomeComponentTiles(layout, navigation)}
-      </HomeContainer>
-      <HomeContainer heading="Text">
-        {RenderHomeComponentTiles(text, navigation)}
-      </HomeContainer>
-      <HomeContainer heading="Status and Info">
-        {RenderHomeComponentTiles(statusAndInfo, navigation)}
-      </HomeContainer>
-      <HomeContainer heading="Media">
-        {RenderHomeComponentTiles(media, navigation)}
-      </HomeContainer>
+      {
+        categories.map((category) => 
+          <HomeContainer heading={category}>
+            {RenderHomeComponentTiles(categoryMap.get(category), navigation)}
+          </HomeContainer>
+        )
+      }
     </View>
   );
 };
@@ -233,7 +222,7 @@ export const HomePage: React.FunctionComponent<{}> = ({navigation}) => {
 
   return isScreenFocused ? (
     <View>
-      <ScreenWrapper>
+      <ScreenWrapper doNotInset={true}>
         <ScrollView>
           <PageTitle/>
           <View style={styles.container}>
