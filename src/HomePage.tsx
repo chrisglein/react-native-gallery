@@ -126,9 +126,9 @@ const RenderHomeComponentTiles = (indicies: number[], navigation) => {
       <HomeComponentTile
         key={indicies[i]}
         pageKey={RNGalleryList[index].key}
-        description={RNGalleryList[index].description}
-        textIcon={RNGalleryList[index].icon}
-        imageIcon={RNGalleryList[index].colorIcon}
+        subtitle={RNGalleryList[index].subtitle}
+        textIcon={RNGalleryList[index].textIcon}
+        imageIcon={RNGalleryList[index].imageIcon}
         navigation={navigation}
       />,
     );

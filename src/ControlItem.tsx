@@ -25,7 +25,7 @@ const createStyles = (colors: any) =>
       // BodyStrongTextBlockStyle
       fontWeight: '500', // SemiBold
     },
-    controlItemDescription: {
+    controlItemSubtitle: {
       // CaptionTextBlockStyle
       color: PlatformColor('TextFillColorSecondaryBrush'),
       fontSize: 12
@@ -34,12 +34,12 @@ const createStyles = (colors: any) =>
 
 type HomeComponentTileProps = {
   pageKey: string;
-  description?: string;
+  subtitle?: string;
   textIcon: string;
   imageIcon?: ImageSourcePropType;
   navigation: any;
 };
-const HomeComponentTile = ({pageKey, description, textIcon, imageIcon, navigation}: HomeComponentTileProps) => {
+const HomeComponentTile = ({pageKey, subtitle, textIcon, imageIcon, navigation}: HomeComponentTileProps) => {
   const {colors} = useTheme();
   const styles = createStyles(colors);
 
@@ -91,8 +91,8 @@ const HomeComponentTile = ({pageKey, description, textIcon, imageIcon, navigatio
           style={styles.controlItemTitle}>
           {pageKey}
         </Text>
-        <Text style={styles.controlItemDescription}>
-          {description}
+        <Text style={styles.controlItemSubtitle}>
+          {subtitle}
         </Text>
       </View>
     </Pressable>
