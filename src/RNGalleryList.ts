@@ -1,5 +1,6 @@
 'use strict';
 import React from 'react';
+import type {ImageSourcePropType} from 'react-native';
 import {HomePage} from './HomePage';
 import {SettingsPage} from './SettingsPage';
 import {ButtonExamplePage} from './examples/ButtonExamplePage';
@@ -41,7 +42,9 @@ interface IRNGalleryExample {
   key: string;
   component: React.ElementType;
   icon: string;
+  colorIcon?: ImageSourcePropType;
   type: string;
+  description?: string;
 }
 
 export const RNGalleryList: Array<IRNGalleryExample> = [
@@ -61,12 +64,15 @@ export const RNGalleryList: Array<IRNGalleryExample> = [
     key: 'Button',
     component: ButtonExamplePage,
     icon: '\uE815',
+    colorIcon: require('../assets/ControlImages/Button.png'),
+    description: 'A control that responds to user input and raises a Click event.',
     type: 'Basic Input',
   },
   {
     key: 'CheckBox',
     component: CheckBoxExamplePage,
     icon: '\uE73A',
+    colorIcon: require('../assets/ControlImages/Checkbox.png'),
     type: 'Basic Input',
   },
   {
@@ -79,6 +85,7 @@ export const RNGalleryList: Array<IRNGalleryExample> = [
     key: 'DatePicker',
     component: DatePickerExamplePage,
     icon: '\uE787',
+    colorIcon: require('../assets/ControlImages/DatePicker.png'),
     type: 'Date and Time',
   },
   {
@@ -91,24 +98,28 @@ export const RNGalleryList: Array<IRNGalleryExample> = [
     key: 'Expander',
     component: ExpanderExamplePage,
     icon: '\uE8C4',
+    colorIcon: require('../assets/ControlImages/Expander.png'),
     type: 'Layout',
   },
   {
     key: 'FlatList ',
     component: FlatListExamplePage,
     icon: '\uE8A4',
+    colorIcon: require('../assets/ControlImages/ListView.png'),
     type: 'Layout',
   },
   {
     key: 'Flyout',
     component: FlyoutExamplePage,
     icon: '\uE75A',
+    colorIcon: require('../assets/ControlImages/Flyout.png'),
     type: 'Dialogs and Flyouts',
   },
   {
     key: 'Image',
     component: ImageExamplePage,
     icon: '\uEB9F',
+    colorIcon: require('../assets/ControlImages/Image.png'),
     type: 'Media',
   },
   {
@@ -127,18 +138,21 @@ export const RNGalleryList: Array<IRNGalleryExample> = [
     key: 'Picker',
     component: PickerExamplePage,
     icon: '\uE7B8',
+    colorIcon: require('../assets/ControlImages/ComboBox.png'),
     type: 'Basic Input',
   },
   {
     key: 'Popup',
     component: PopupExamplePage,
     icon: '\uE75A',
+    colorIcon: require('../assets/ControlImages/Flyout.png'),
     type: 'Layout',
   },
   {
     key: 'Pressable',
     component: PressableExamplePage,
     icon: '\uE815',
+    colorIcon: require('../assets/ControlImages/Button.png'),
     type: 'Basic Input',
   },
   {
@@ -151,12 +165,14 @@ export const RNGalleryList: Array<IRNGalleryExample> = [
     key: 'ProgressView',
     component: ProgressViewExamplePage,
     icon: '\uF16A',
+    colorIcon: require('../assets/ControlImages/ProgressBar.png'),
     type: 'Basic Input',
   },
   {
     key: 'ScrollView',
     component: ScrollViewExamplePage,
     icon: '\uEC8F',
+    colorIcon: require('../assets/ControlImages/ScrollView.png'),
     type: 'Layout',
   },
   {
@@ -169,6 +185,7 @@ export const RNGalleryList: Array<IRNGalleryExample> = [
     key: 'Slider',
     component: SliderExamplePage,
     icon: '\uE9E9',
+    colorIcon: require('../assets/ControlImages/Slider.png'),
     type: 'Basic Input',
   },
   {
@@ -181,30 +198,35 @@ export const RNGalleryList: Array<IRNGalleryExample> = [
     key: 'Switch',
     component: SwitchExamplePage,
     icon: '\uF19E',
+    colorIcon: require('../assets/ControlImages/ToggleSwitch.png'),
     type: 'Basic Input',
   },
   {
     key: 'Text',
     component: TextExamplePage,
     icon: '\uE8D2',
+    colorIcon: require('../assets/ControlImages/TextBlock.png'),
     type: 'Text',
   },
   {
     key: 'TextInput',
     component: TextInputExamplePage,
     icon: '\uE90A',
+    colorIcon: require('../assets/ControlImages/TextBox.png'),
     type: 'Text',
   },
   {
     key: 'TimePicker',
     component: TimePickerExamplePage,
     icon: '\uE823',
+    colorIcon: require('../assets/ControlImages/TimePicker.png'),
     type: 'Date and Time',
   },
   {
     key: 'TextToSpeech',
     component: TTSExamplePage,
     icon: '\uEC43',
+    colorIcon: require('../assets/ControlImages/Sound.png'),
     type: 'Media',
   },
   {
@@ -229,18 +251,21 @@ export const RNGalleryList: Array<IRNGalleryExample> = [
     key: 'TrackPlayer',
     component: TrackPlayerExamplePage,
     icon: '\uEC4F',
+    colorIcon: require('../assets/ControlImages/Sound.png'),
     type: 'Media',
   },
   {
     key: 'View',
     component: ViewExamplePage,
     icon: '\uECA5',
+    colorIcon: require('../assets/ControlImages/Canvas.png'),
     type: 'Layout',
   },
   {
     key: 'WebView',
     component: WebViewExamplePage,
     icon: '\uE774',
+    colorIcon: require('../assets/ControlImages/WebView.png'),
     type: 'Media',
   },
   {
@@ -253,6 +278,7 @@ export const RNGalleryList: Array<IRNGalleryExample> = [
     key: 'VirtualizedList',
     component: VirtualizedListExamplePage,
     icon: '\uE8A4',
+    colorIcon: require('../assets/ControlImages/ListView.png'),
     type: 'Layout',
   },
   {

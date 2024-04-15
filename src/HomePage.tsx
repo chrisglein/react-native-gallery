@@ -1,11 +1,12 @@
 'use strict';
-import {StyleSheet, View, Text, Pressable, ScrollView, Image} from 'react-native';
+import {StyleSheet, View, Text, ScrollView, Image} from 'react-native';
 import React from 'react';
 import {useTheme, useIsFocused} from '@react-navigation/native';
 import RNGalleryList from './RNGalleryList';
 import {ScreenWrapper} from './components/ScreenWrapper';
 import {TileGallery} from './TileGallery';
 import LinearGradient from 'react-native-linear-gradient';
+import {HomeComponentTile} from './ControlItem';
 
 const createStyles = (colors: any) =>
   StyleSheet.create({
@@ -39,8 +40,6 @@ const createStyles = (colors: any) =>
     icon: {
       fontFamily: 'Segoe MDL2 Assets',
       fontSize: 16,
-      paddingRight: 10,
-      paddingLeft: 10,
     },
     heroGradient : {
       position: 'absolute',
@@ -119,52 +118,6 @@ const HomeContainer = (props: {heading: string; children: React.ReactNode}) => {
   );
 };
 
-type HomeComponentTileProps = {
-  pageKey: string;
-  pageIcon: string;
-  navigation: any;
-};
-const HomeComponentTile = ({pageKey, pageIcon, navigation}: HomeComponentTileProps) => {
-  const {colors} = useTheme();
-  const styles = createStyles(colors);
-
-  return (
-    <Pressable
-      accessibilityRole="button"
-      accessibilityLabel={
-        pageKey === 'Button'
-          ? 'Button1 control'
-          : pageKey + ' control'
-      }
-      accessibilityHint={
-        'click to view the ' + pageKey + ' sample page'
-      }
-      style={({pressed}) => [
-        {
-          backgroundColor: colors.background,
-          borderColor: colors.border,
-          borderWidth: 1,
-          borderBottomWidth: pressed ? 1 : 2,
-          paddingTop: 5,
-          paddingBottom: 5,
-          borderRadius: 4,
-          alignItems: 'center',
-          flexDirection: 'row',
-          marginRight: 5,
-          marginBottom: 5,
-        },
-      ]}
-      onPress={() => {
-        navigation.navigate(pageKey);
-      }}>
-      <Text style={styles.icon}>{pageIcon}</Text>
-      <Text style={[styles.text, {paddingRight: 10}]}>
-        {pageKey}
-      </Text>
-    </Pressable>
-  );
-};
-
 const RenderHomeComponentTiles = (indicies: number[], navigation) => {
   var homeComponentTiles = [];
   for (var i = 0; i < indicies.length; i++) {
@@ -173,12 +126,19 @@ const RenderHomeComponentTiles = (indicies: number[], navigation) => {
       <HomeComponentTile
         key={indicies[i]}
         pageKey={RNGalleryList[index].key}
-        pageIcon={RNGalleryList[index].icon}
+        description={RNGalleryList[index].description}
+        textIcon={RNGalleryList[index].icon}
+        imageIcon={RNGalleryList[index].colorIcon}
         navigation={navigation}
       />,
     );
   }
-  return homeComponentTiles;
+
+  return (
+    <View style={{flexDirection: 'row', flexWrap: 'wrap', gap: 8}}>
+      {homeComponentTiles}
+    </View>
+  )
 };
 
 const RenderPageContent = ({navigation}) => {
