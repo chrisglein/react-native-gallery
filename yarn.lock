@@ -9871,6 +9871,11 @@ react-native-print@0.8.0:
   resolved "https://registry.yarnpkg.com/react-native-print/-/react-native-print-0.8.0.tgz#9d200812ff2462c0d2421776dcab378e544a52fc"
   integrity sha512-eldQMPw5YjhHLckIvG2EodLvADjjk42k//CMVqQJ7wJHpm6gk0znlZmSC/oz2M46J74dzLLVcq20xgt5lQTP6w==
 
+react-native-radio-buttons-group@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-radio-buttons-group/-/react-native-radio-buttons-group-3.1.0.tgz#b19d383fc2dece17eba1ce37b9f357c47431aded"
+  integrity sha512-DiNM1yI6WfRygUZ+Z/bsjggyLypXsxRNXPNYpPHXSEVbRD6uF5Aei+HMIwyeRbfMKPtHwLq7cGsmUDV01i+rOQ==
+
 react-native-reanimated@^1.10.0:
   version "1.13.4"
   resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-1.13.4.tgz#f57c65e80ab5d2f60bf7dd21716c0bad8108b84e"

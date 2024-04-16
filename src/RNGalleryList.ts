@@ -33,6 +33,7 @@ import {SensitiveInfoExamplePage} from './examples/SensitiveInfoExamplePage';
 import {PopupExamplePage} from './examples/PopupExamplePage';
 import {FlyoutExamplePage} from './examples/FlyoutExamplePage';
 import {ProgressViewExamplePage} from './examples/ProgressViewExamplePage';
+import {RadioButtonsExamplePage} from './examples/RadioButtonsExamplePage';
 import {XamlExamplePage} from './examples/XamlExamplePage';
 import {TrackPlayerExamplePage} from './examples/TrackPlayerExamplePage';
 import {WindowsHelloExamplePage} from './examples/WindowsHelloExamplePage';
@@ -202,6 +203,13 @@ export const RNGalleryList: Array<IRNGalleryExample> = [
     textIcon: '\uF16A',
     imageIcon: require('../assets/ControlImages/ProgressBar.png'),
     subtitle: "Shows the apps progress on a task, or that the app is performing ongoing work that doesn't block user interaction.",
+    type: 'Basic Input',
+  },
+  {
+    key: 'Radio Buttons',
+    component: RadioButtonsExamplePage,
+    textIcon: '\uE815',
+    imageIcon: require('../assets/ControlImages/RadioButtons.png'),
     type: 'Basic Input',
   },
   {
