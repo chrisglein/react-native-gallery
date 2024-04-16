@@ -64,11 +64,13 @@ function RenderDrawer(props) {
     getDrawerStatusFromState(props.navigation.getState()) == 'open';
 
   // Home and Settings drawer items have already been manually loaded.
-  const filterPredicate = (item) => item.key === 'Home' || item.key === 'Settings';
-  RNGalleryList.filter(filterPredicate).map((item) => {
+  const filterPredicate = (item) => item.type !== '';
+  return RNGalleryList.filter(filterPredicate).map((item) => {
     return (
       <DrawerItem
-        importantForAccessibility={isDrawerOpen ? 'auto' : 'no-hide-descendants'}
+        importantForAccessibility={
+          isDrawerOpen ? 'auto' : 'no-hide-descendants'
+        }
         key={item.key}
         label={() => {
           return <Text style={styles.drawerText}>{item.key}</Text>;
