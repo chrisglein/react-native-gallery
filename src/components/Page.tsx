@@ -14,8 +14,8 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   title: {
-    fontWeight: '200',
-    fontSize: 26,
+    fontWeight: '600',
+    fontSize: 28,
   },
   titlePane: {
     marginTop: 44,
@@ -97,7 +97,7 @@ export function Page(props: {
         <Text
           accessible
           accessibilityRole={'header'}
-          style={[styles.title, {color: colors.text}]}>
+          style={styles.title}>
           {props.title}
         </Text>
         <View>

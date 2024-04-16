@@ -3,6 +3,7 @@ import {
   FlatList,
   FlatListProps,
   Image,
+  PlatformColor,
   Pressable,
   View,
 } from 'react-native';
@@ -26,10 +27,10 @@ const PagingButton = ({left, onPress}: PagingButtonProps) => {
       onHoverOut={() => setHover(false)}>
        <View
         style={{
-          backgroundColor: hover? 'rgb(245 245 245)' :'rgb(255 255 255)',
+          backgroundColor: hover ? PlatformColor('ControlFillColorSecondaryBrush') : PlatformColor('ControlFillColorDefaultBrush'),
           borderRadius: 24,
           borderWidth: 1,
-          borderColor: hover? 'rgb(97 97 97)': 'rgb(209 209 209)',
+          borderColor: hover ? PlatformColor('ControlElevationBorderBrush') : PlatformColor('CircleElevationBorderBrush'),
           alignItems: 'center',
           justifyContent: 'center',
           minWidth: 48,

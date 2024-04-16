@@ -15,7 +15,7 @@ const createStyles = (colors: any, isHovered: boolean, isPressing: boolean) =>
       // https://github.com/microsoft/WinUI-Gallery/blob/c3cf8db5607c71f5df51fd4eb45d0ce6e932d338/WinUIGallery/Controls/HeaderTile.xaml#L12
       backgroundColor: 
         isHovered ?
-          PlatformColor('SystemColorWindowColor') : 
+          PlatformColor('ControlOnImageFillColorSecondaryBrush') : 
           PlatformColor('AcrylicInAppFillColorDefaultBrush'),
       borderColor: 
         isHovered ?
