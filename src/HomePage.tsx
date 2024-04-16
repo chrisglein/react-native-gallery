@@ -1,5 +1,12 @@
 'use strict';
-import {StyleSheet, View, Text, ScrollView, Image} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  ScrollView,
+  Image,
+  useColorScheme,
+} from 'react-native';
 import React from 'react';
 import {useTheme, useIsFocused} from '@react-navigation/native';
 import RNGalleryList, {RNGalleryCategories} from './RNGalleryList';
@@ -13,7 +20,8 @@ const createStyles = (colors: any) =>
     heading: {
       marginTop: 30,
       marginBottom: 10,
-      fontSize: 23,
+      fontSize: 20,
+      fontWeight: '600',
       color: colors.text,
     },
     text: {
@@ -51,7 +59,6 @@ const createStyles = (colors: any) =>
       resizeMode: 'cover',
       width: '100%',
       height: '99%',
-      opacity: 0.9,
     },
     pageHeader: {
     },
@@ -76,6 +83,7 @@ const createStyles = (colors: any) =>
   
 const PageTitle = () => {
   const {colors} = useTheme();
+  const colorScheme = useColorScheme();
   const styles = createStyles(colors);
 
   return (
@@ -84,15 +92,27 @@ const PageTitle = () => {
       <LinearGradient
         start={{x: 0.5, y: 0}}
         end={{x: 0.5, y: 1}}
-        colors={['#CED8E4', '#D5DBE3']}
+        colors={
+          colorScheme === 'light' ? 
+            ['#CED8E4', '#D5DBE3'] : 
+            ['#020B20', '#020B20']
+          }
         style={styles.heroGradient}/>
       <Image
         source={require('../assets/GalleryHeaderImage.png')}
-        style={styles.heroBackgroundImage}/>
+        style={[
+          styles.heroBackgroundImage,
+          {
+            opacity: colorScheme === 'light' ? 0.9 : 0.8,
+          }]}/>
       <LinearGradient
         start={{x: 0, y: 0.5}}
         end={{x: 0, y: 1.5}}
-        colors={['#f9f9f900', '#f9f9f9FF']}
+        colors={
+          colorScheme === 'light' ? 
+            ['#f9f9f900', '#f9f9f9FF'] : 
+            ['#2C2C2C00', '#2C2C2CFF']
+          }
         style={styles.heroGradient}/>
       <View style={styles.pageHeader}>
         <View style={styles.pageTitleContainer}>
