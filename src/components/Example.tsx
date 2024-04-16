@@ -8,6 +8,7 @@ import {
   View,
 } from 'react-native';
 import {useTheme} from '@react-navigation/native';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 const createStyles = (colors: any) =>
   StyleSheet.create({
@@ -46,6 +47,25 @@ const createStyles = (colors: any) =>
     },
   });
 
+type CopyToClipboardButtonProps = {
+  content: string;
+};
+const CopyToClipboardButton = ({content} : CopyToClipboardButtonProps) => {
+  const {colors} = useTheme();
+  const styles = createStyles(colors);
+
+  const copyIcon = '\uE8C8';
+
+  return (
+    <Pressable
+      tooltip={'Copy to clipboard'}
+      style={styles.copyButton}
+      onPress={() => Clipboard.setString(content)}>
+      <Text style={styles.copyButtonText}>{copyIcon}</Text>
+    </Pressable>
+  )
+};
+
 export function Example(props: {
   title: string;
   code: string;
@@ -54,7 +74,6 @@ export function Example(props: {
 {
   const {colors} = useTheme();
   const styles = createStyles(colors);
-  const copyIcon = '\uE8C8';
   return (
     <View>
       <Text accessibilityRole={'header'} style={styles.title}>
@@ -66,12 +85,7 @@ export function Example(props: {
           <View style={styles.codeContainer}>
             <Code>{props.code}</Code>
             <View style={{position: 'absolute', right: 12, top: 12}}>
-              <Pressable
-                tooltip={'Copy to clipboard'}
-                style={styles.copyButton}
-                onPress={() => console.log(props.code)}>
-                <Text style={styles.copyButtonText}>{copyIcon}</Text>
-              </Pressable>
+              <CopyToClipboardButton content={props.code}/>
             </View>
           </View>
         </View>
