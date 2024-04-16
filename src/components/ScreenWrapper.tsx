@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
     height: '100%',
-    backgroundColor: '#f9f9f9', // PlatformColor('SolidBackgroundFillColorBaseBrush'),
+    backgroundColor: PlatformColor('SolidBackgroundFillColorBaseBrush'),
   },
   navBar: {
     backgroundColor: PlatformColor('NavigationViewDefaultPaneBackground'),
