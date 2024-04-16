@@ -5,6 +5,7 @@ import {
   Text,
   ScrollView,
   Image,
+  PlatformColor,
   useColorScheme,
 } from 'react-native';
 import React from 'react';
@@ -22,12 +23,7 @@ const createStyles = (colors: any) =>
       marginBottom: 10,
       fontSize: 20,
       fontWeight: '600',
-      color: colors.text,
-    },
-    text: {
-      paddingTop: 5,
-      paddingBottom: 5,
-      color: colors.text,
+      color: PlatformColor('TextFillColorPrimaryBrush'),
     },
     container: {
       padding: 10,
