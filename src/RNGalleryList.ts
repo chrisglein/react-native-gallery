@@ -40,12 +40,15 @@ import {NetworkExamplePage} from './examples/NetworkExamplePage';
 
 let RNGalleryCategories = [
   'Basic Input',
-  'Date and Time',
-  'Dialogs and Flyouts',
+  'Collections',
+  'Date & time',
+  'Dialogs & flyouts',
   'Layout',
-  'Text',
-  'Status and Info',
   'Media',
+  'Scrolling',
+  'Status and Info',
+  'Text',
+  'Legacy',
 ];
 
 interface IRNGalleryExample {
@@ -97,8 +100,8 @@ export const RNGalleryList: Array<IRNGalleryExample> = [
     component: DatePickerExamplePage,
     textIcon: '\uE787',
     imageIcon: require('../assets/ControlImages/DatePicker.png'),
-    subtitle: "Use a DatePicker to let users set a date in your app, for example to schedule an appointment. The DatePicker displays three controls for month, date, and year. These controls are easy to use with touch or mouse, and they can be styled and configured in several different ways.",
-    type: 'Date and Time',
+    subtitle: "A control that lets a user pick a date value.",
+    type: 'Date & time',
   },
   {
     key: 'DeviceInfo',
@@ -119,7 +122,7 @@ export const RNGalleryList: Array<IRNGalleryExample> = [
     component: FlatListExamplePage,
     textIcon: '\uE8A4',
     imageIcon: require('../assets/ControlImages/ListView.png'),
-    type: 'Layout',
+    type: 'Collections',
   },
   {
     key: 'Flyout',
@@ -127,7 +130,7 @@ export const RNGalleryList: Array<IRNGalleryExample> = [
     textIcon: '\uE75A',
     imageIcon: require('../assets/ControlImages/Flyout.png'),
     subtitle: "Shows contextual information and enables user interaction.",
-    type: 'Dialogs and Flyouts',
+    type: 'Dialogs & flyouts',
   },
   {
     key: 'Image',
@@ -162,7 +165,7 @@ export const RNGalleryList: Array<IRNGalleryExample> = [
     component: PopupExamplePage,
     textIcon: '\uE75A',
     imageIcon: require('../assets/ControlImages/Flyout.png'),
-    type: 'Layout',
+    type: 'Dialogs & flyouts',
   },
   {
     key: 'Pressable',
@@ -191,7 +194,7 @@ export const RNGalleryList: Array<IRNGalleryExample> = [
     textIcon: '\uEC8F',
     imageIcon: require('../assets/ControlImages/ScrollView.png'),
     subtitle: "A container control that lets the user pan and zoom its content.",
-    type: 'Layout',
+    type: 'Scrolling',
   },
   {
     key: 'SensitiveInfo',
@@ -243,7 +246,7 @@ export const RNGalleryList: Array<IRNGalleryExample> = [
     textIcon: '\uE823',
     imageIcon: require('../assets/ControlImages/TimePicker.png'),
     subtitle: "A configurable control that lets a user pick a time value.",
-    type: 'Date and Time',
+    type: 'Date & time',
   },
   {
     key: 'TextToSpeech',
@@ -256,19 +259,19 @@ export const RNGalleryList: Array<IRNGalleryExample> = [
     key: 'TouchableHighlight',
     component: TouchableHighlightExamplePage,
     textIcon: '\uEDA4',
-    type: 'Basic Input',
+    type: 'Legacy',
   },
   {
     key: 'TouchableOpacity',
     component: TouchableOpacityExamplePage,
     textIcon: '\uEDA4',
-    type: 'Basic Input',
+    type: 'Legacy',
   },
   {
     key: 'TouchableWithoutFeedback',
     component: TouchableWithoutFeedbackExamplePage,
     textIcon: '\uEDA4',
-    type: 'Basic Input',
+    type: 'Legacy',
   },
   {
     key: 'TrackPlayer',
@@ -303,7 +306,7 @@ export const RNGalleryList: Array<IRNGalleryExample> = [
     component: VirtualizedListExamplePage,
     textIcon: '\uE8A4',
     imageIcon: require('../assets/ControlImages/ListView.png'),
-    type: 'Layout',
+    type: 'Collections',
   },
   {
     key: 'Xaml',

@@ -84,7 +84,11 @@ const HomeComponentTile = ({pageKey, subtitle, textIcon, imageIcon, navigation}:
       onHoverOut={() => setIsHovered(false)}>
       {imageIcon ?
         <Image source={imageIcon} style={styles.controlItemIcon}/> :
-        <Text style={styles.textIcon}>{textIcon}</Text>
+        <View>
+          <Image source={require('../../assets/ControlImages/Placeholder.png')} style={styles.controlItemIcon}/>
+          <Text style={[styles.textIcon, {position: 'absolute', marginTop: 28, color: PlatformColor('TextOnAccentFillColorPrimaryBrush')}]}>{textIcon}</Text>
+        </View>
+          
       }
       <View style={{flexShrink: 1}}>
         <Text

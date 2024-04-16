@@ -137,12 +137,9 @@ function CustomDrawerContent(props) {
 }
 
 function renderScreens() {
-  const items = [];
-  for (var i = 0; i < RNGalleryList.length; i++) {
-    items.push(renderScreen(i));
-  }
-
-  return items;
+  return RNGalleryList.map((item, index) => {
+    return renderScreen(index);
+  });
 }
 
 function renderScreen(i: number) {
