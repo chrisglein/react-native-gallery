@@ -45,7 +45,7 @@ const createStyles = (colors: any) =>
       fontFamily: 'Segoe MDL2 Assets',
       fontSize: 16,
     },
-    heroGradient : {
+    heroGradient: {
       position: 'absolute',
       width: '100%',
       height: '100%',
@@ -56,8 +56,7 @@ const createStyles = (colors: any) =>
       width: '100%',
       height: '99%',
     },
-    pageHeader: {
-    },
+    pageHeader: {},
     pageTitleContainer: {
       height: 204,
       justifyContent: 'center',
@@ -66,17 +65,16 @@ const createStyles = (colors: any) =>
       // https://github.com/microsoft/WinUI-Gallery/blob/c3cf8db5607c71f5df51fd4eb45d0ce6e932d338/WinUIGallery/HomePage.xaml#L82
       // TitleLargeTextBlockStyle
       fontSize: 40,
-      fontWeight: "600", // SemiBold
+      fontWeight: '600', // SemiBold
       paddingLeft: 36,
     },
     controlItems: {
       flexDirection: 'row',
       flexWrap: 'wrap',
-      gap: 12
-    }
+      gap: 12,
+    },
   });
 
-  
 const PageTitle = () => {
   const {colors} = useTheme();
   const colorScheme = useColorScheme();
@@ -89,27 +87,31 @@ const PageTitle = () => {
         start={{x: 0.5, y: 0}}
         end={{x: 0.5, y: 1}}
         colors={
-          colorScheme === 'light' ? 
-            ['#CED8E4', '#D5DBE3'] : 
-            ['#020B20', '#020B20']
-          }
-        style={styles.heroGradient}/>
+          colorScheme === 'light'
+            ? ['#CED8E4', '#D5DBE3']
+            : ['#020B20', '#020B20']
+        }
+        style={styles.heroGradient}
+      />
       <Image
         source={require('../assets/GalleryHeaderImage.png')}
         style={[
           styles.heroBackgroundImage,
           {
             opacity: colorScheme === 'light' ? 0.9 : 0.8,
-          }]}/>
+          },
+        ]}
+      />
       <LinearGradient
         start={{x: 0, y: 0.5}}
         end={{x: 0, y: 1.5}}
         colors={
-          colorScheme === 'light' ? 
-            ['#f9f9f900', '#f9f9f9FF'] : 
-            ['#2C2C2C00', '#2C2C2CFF']
-          }
-        style={styles.heroGradient}/>
+          colorScheme === 'light'
+            ? ['#f9f9f900', '#f9f9f9FF']
+            : ['#2C2C2C00', '#2C2C2CFF']
+        }
+        style={styles.heroGradient}
+      />
       <View style={styles.pageHeader}>
         <View style={styles.pageTitleContainer}>
           <Text
@@ -119,12 +121,11 @@ const PageTitle = () => {
             React Native Gallery
           </Text>
         </View>
-        <TileGallery/>
+        <TileGallery />
       </View>
     </View>
   );
 };
-  
 
 const HomeContainer = (props: {heading: string; children: React.ReactNode}) => {
   const {colors} = useTheme();
@@ -142,7 +143,7 @@ const HomeContainer = (props: {heading: string; children: React.ReactNode}) => {
 const RenderHomeComponentTiles = (indicies: number[], navigation) => {
   const {colors} = useTheme();
   const styles = createStyles(colors);
-  
+
   var homeComponentTiles = [];
   for (var i = 0; i < indicies.length; i++) {
     let index = indicies[i];
@@ -158,11 +159,7 @@ const RenderHomeComponentTiles = (indicies: number[], navigation) => {
     );
   }
 
-  return (
-    <View style={styles.controlItems}>
-      {homeComponentTiles}
-    </View>
-  )
+  return <View style={styles.controlItems}>{homeComponentTiles}</View>;
 };
 
 const RenderPageContent = ({navigation}) => {
@@ -177,16 +174,14 @@ const RenderPageContent = ({navigation}) => {
     let categoryList = categoryMap.get(category);
     categoryList?.push(index);
   });
-  
+
   return (
     <View>
-      {
-        categories.map((category) => 
-          <HomeContainer heading={category}>
-            {RenderHomeComponentTiles(categoryMap.get(category), navigation)}
-          </HomeContainer>
-        )
-      }
+      {categories.map((category) => (
+        <HomeContainer heading={category}>
+          {RenderHomeComponentTiles(categoryMap.get(category), navigation)}
+        </HomeContainer>
+      ))}
     </View>
   );
 };
@@ -200,9 +195,9 @@ export const HomePage: React.FunctionComponent<{}> = ({navigation}) => {
     <View>
       <ScreenWrapper doNotInset={true}>
         <ScrollView>
-          <PageTitle/>
+          <PageTitle />
           <View style={styles.container}>
-            <RenderPageContent navigation={navigation}/>
+            <RenderPageContent navigation={navigation} />
           </View>
         </ScrollView>
       </ScreenWrapper>

@@ -12,10 +12,12 @@ type PagingButtonProps = {left: boolean, onPress: () => void};
 const PagingButton = ({left, onPress}: PagingButtonProps) => {
   const [hover, setHover] = useState(false);
 
-  const rightImage = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDQ4IDIwNDgiIGNsYXNzPSJzdmdfZGQ3OTBlZTMiIGZvY3VzYWJsZT0iZmFsc2UiPjxwYXRoIGQ9Ik01MTUgMTk1NWw5MzAtOTMxTDUxNSA5M2w5MC05MCAxMDIyIDEwMjFMNjA1IDIwNDVsLTkwLTkweiIvPjwvc3ZnPg==';
-  const leftImage = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDQ4IDIwNDgiIGNsYXNzPSJzdmdfZGQ3OTBlZTMiIGZvY3VzYWJsZT0iZmFsc2UiPjxwYXRoIGQ9Ik0xNDQzIDIwNDVMNDIxIDEwMjQgMTQ0MyAzbDkwIDkwLTkzMCA5MzEgOTMwIDkzMS05MCA5MHoiLz48L3N2Zz4=';
+  const rightImage =
+    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDQ4IDIwNDgiIGNsYXNzPSJzdmdfZGQ3OTBlZTMiIGZvY3VzYWJsZT0iZmFsc2UiPjxwYXRoIGQ9Ik01MTUgMTk1NWw5MzAtOTMxTDUxNSA5M2w5MC05MCAxMDIyIDEwMjFMNjA1IDIwNDVsLTkwLTkweiIvPjwvc3ZnPg==';
+  const leftImage =
+    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDQ4IDIwNDgiIGNsYXNzPSJzdmdfZGQ3OTBlZTMiIGZvY3VzYWJsZT0iZmFsc2UiPjxwYXRoIGQ9Ik0xNDQzIDIwNDVMNDIxIDEwMjQgMTQ0MyAzbDkwIDkwLTkzMCA5MzEgOTMwIDkzMS05MCA5MHoiLz48L3N2Zz4=';
 
-  const tooltip = left ? "Previous" : "Next";
+  const tooltip = left ? 'Previous' : 'Next';
 
   return (
     <Pressable
@@ -25,12 +27,16 @@ const PagingButton = ({left, onPress}: PagingButtonProps) => {
       onPress={() => onPress()}
       onHoverIn={() => setHover(true)}
       onHoverOut={() => setHover(false)}>
-       <View
+      <View
         style={{
-          backgroundColor: hover ? PlatformColor('ControlFillColorSecondaryBrush') : PlatformColor('ControlFillColorDefaultBrush'),
+          backgroundColor: hover
+            ? PlatformColor('ControlFillColorSecondaryBrush')
+            : PlatformColor('ControlFillColorDefaultBrush'),
           borderRadius: 24,
           borderWidth: 1,
-          borderColor: hover ? PlatformColor('ControlElevationBorderBrush') : PlatformColor('CircleElevationBorderBrush'),
+          borderColor: hover
+            ? PlatformColor('ControlElevationBorderBrush')
+            : PlatformColor('CircleElevationBorderBrush'),
           alignItems: 'center',
           justifyContent: 'center',
           minWidth: 48,
@@ -50,68 +56,85 @@ const PagingButton = ({left, onPress}: PagingButtonProps) => {
 type HorizontalListWithPageNavigationProps<ItemT> = FlatListProps<ItemT> & {
   spacing?: number,
 };
-const HorizontalListWithPageNavigation = <ItemT,>(props: HorizontalListWithPageNavigationProps<ItemT>): JSX.Element => {
+const HorizontalListWithPageNavigation = (props: HorizontalListWithPageNavigationProps<JSX.Element>): JSX.Element => {
   const listRef = React.useRef<FlatList>(null);
   const [scrollLeftTarget, setScrollLeftTarget] = React.useState(-1);
   const [scrollRightTarget, setScrollRightTarget] = React.useState(-1);
 
-  const onViewableItemsChanged = ({
-    viewableItems,
-  }) => {
+  const onViewableItemsChanged = ({viewableItems}) => {
     const firstVisibleIndex = viewableItems[0].index;
     const lastVisibleIndex = viewableItems[viewableItems.length - 1].index;
     const itemsInView = viewableItems.length;
-    setScrollLeftTarget(firstVisibleIndex > 0 ? Math.max(firstVisibleIndex - itemsInView, 0) : -1);
+    setScrollLeftTarget(
+      firstVisibleIndex > 0 ? Math.max(firstVisibleIndex - itemsInView, 0) : -1,
+    );
     setScrollRightTarget(lastVisibleIndex);
   };
   const viewabilityConfigCallbackPairs = React.useRef([
-    { onViewableItemsChanged },
+    {onViewableItemsChanged},
   ]);
 
   const canScrollLeft = scrollLeftTarget >= 0;
-  const canScrollRight = props.data && scrollRightTarget < props.data.length - 1;
+  const canScrollRight =
+    props.data && scrollRightTarget < props.data.length - 1;
 
   return (
     <View>
-      {canScrollLeft && 
-        <View style={{position: 'absolute', left: 0, zIndex: 1, height: '100%', justifyContent: 'center'}}>
+      {canScrollLeft &&
+        <View
+          style={{
+            position: 'absolute',
+            left: 0,
+            zIndex: 1,
+            height: '100%',
+            justifyContent: 'center',
+          }}>
           <PagingButton
             left={true}
             onPress={() => {
               listRef.current?.scrollToIndex({
-                animated: true, 
+                animated: true,
                 index: scrollLeftTarget,
                 viewPosition: 0,
               });
-            }}/>
+            }}
+          />
         </View>
       }
-      {canScrollRight && 
-        <View style={{position: 'absolute', right: 0, zIndex: 1, height: '100%', justifyContent: 'center'}}>
+      {canScrollRight &&
+        <View
+          style={{
+            position: 'absolute',
+            right: 0,
+            zIndex: 1,
+            height: '100%',
+            justifyContent: 'center',
+          }}>
           <PagingButton
             left={false}
             onPress={() => {
               listRef.current?.scrollToIndex({
-                animated: true, 
+                animated: true,
                 index: scrollRightTarget,
                 viewPosition: 0,
               });
-            }}/>
+            }}
+          />
         </View>
       }
       <FlatList
-        viewabilityConfigCallbackPairs={
-          viewabilityConfigCallbackPairs.current
-        }
+        viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
         showsHorizontalScrollIndicator={false}
         ref={listRef}
         horizontal={true}
-        ItemSeparatorComponent={() => <View style={{width: props.spacing ?? 10}} />}
+        ItemSeparatorComponent={() => (
+          <View style={{width: props.spacing ?? 10}} />
+        )}
         style={{paddingBottom: 20}}
         {...props}
-        />
+      />
     </View>
-  )
-}
+  );
+};
 
-export { HorizontalListWithPageNavigation };
+export {HorizontalListWithPageNavigation};

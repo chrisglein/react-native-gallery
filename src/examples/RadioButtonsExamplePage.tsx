@@ -60,8 +60,9 @@ export const RadioButtonsExamplePage: React.FunctionComponent<{}> = () => {
                 id: '3',
                 label: 'Option 3',
                 value: 'option3',
-              }
-            ]}/>
+              },
+            ]}
+          />
           <Text>{`Output:
 You selected Option ${radioSelection}`}</Text>
         </View>

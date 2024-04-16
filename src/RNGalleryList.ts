@@ -82,7 +82,7 @@ export const RNGalleryList: Array<IRNGalleryExample> = [
     component: ButtonExamplePage,
     textIcon: '\uE815',
     imageIcon: require('../assets/ControlImages/Button.png'),
-    subtitle: "A control that responds to user input and raises a Click event.",
+    subtitle: 'A control that responds to user input and raises a Click event.',
     type: 'Basic Input',
   },
   {
@@ -90,7 +90,7 @@ export const RNGalleryList: Array<IRNGalleryExample> = [
     component: CheckBoxExamplePage,
     textIcon: '\uE73A',
     imageIcon: require('../assets/ControlImages/Checkbox.png'),
-    subtitle: "A control that a user can select or clear.",
+    subtitle: 'A control that a user can select or clear.',
     type: 'Basic Input',
   },
   {
@@ -111,7 +111,7 @@ export const RNGalleryList: Array<IRNGalleryExample> = [
     component: DatePickerExamplePage,
     textIcon: '\uE787',
     imageIcon: require('../assets/ControlImages/DatePicker.png'),
-    subtitle: "A control that lets a user pick a date value.",
+    subtitle: 'A control that lets a user pick a date value.',
     type: 'Date & time',
   },
   {
@@ -125,7 +125,8 @@ export const RNGalleryList: Array<IRNGalleryExample> = [
     component: ExpanderExamplePage,
     textIcon: '\uE8C4',
     imageIcon: require('../assets/ControlImages/Expander.png'),
-    subtitle: "A container with a header that can be expanded to show a body with more content.",
+    subtitle:
+      'A container with a header that can be expanded to show a body with more content.',
     type: 'Layout',
   },
   {
@@ -140,7 +141,7 @@ export const RNGalleryList: Array<IRNGalleryExample> = [
     component: FlyoutExamplePage,
     textIcon: '\uE75A',
     imageIcon: require('../assets/ControlImages/Flyout.png'),
-    subtitle: "Shows contextual information and enables user interaction.",
+    subtitle: 'Shows contextual information and enables user interaction.',
     type: 'Dialogs & flyouts',
   },
   {
@@ -148,7 +149,7 @@ export const RNGalleryList: Array<IRNGalleryExample> = [
     component: ImageExamplePage,
     textIcon: '\uEB9F',
     imageIcon: require('../assets/ControlImages/Image.png'),
-    subtitle: "A control to display image content.",
+    subtitle: 'A control to display image content.',
     type: 'Media',
   },
   {
@@ -174,7 +175,7 @@ export const RNGalleryList: Array<IRNGalleryExample> = [
     component: PickerExamplePage,
     textIcon: '\uE7B8',
     imageIcon: require('../assets/ControlImages/ComboBox.png'),
-    subtitle: "A drop-down list of items a user can select from.",
+    subtitle: 'A drop-down list of items a user can select from.',
     type: 'Basic Input',
   },
   {
@@ -202,7 +203,8 @@ export const RNGalleryList: Array<IRNGalleryExample> = [
     component: ProgressViewExamplePage,
     textIcon: '\uF16A',
     imageIcon: require('../assets/ControlImages/ProgressBar.png'),
-    subtitle: "Shows the apps progress on a task, or that the app is performing ongoing work that doesn't block user interaction.",
+    subtitle:
+      "Shows the apps progress on a task, or that the app is performing ongoing work that doesn't block user interaction.",
     type: 'Basic Input',
   },
   {
@@ -217,7 +219,8 @@ export const RNGalleryList: Array<IRNGalleryExample> = [
     component: ScrollViewExamplePage,
     textIcon: '\uEC8F',
     imageIcon: require('../assets/ControlImages/ScrollView.png'),
-    subtitle: "A container control that lets the user pan and zoom its content.",
+    subtitle:
+      'A container control that lets the user pan and zoom its content.',
     type: 'Scrolling',
   },
   {
@@ -231,7 +234,8 @@ export const RNGalleryList: Array<IRNGalleryExample> = [
     component: SliderExamplePage,
     textIcon: '\uE9E9',
     imageIcon: require('../assets/ControlImages/Slider.png'),
-    subtitle: "A control that lets the user select from a range of values by moving a Thumb control along a track.",
+    subtitle:
+      'A control that lets the user select from a range of values by moving a Thumb control along a track.',
     type: 'Basic Input',
   },
   {
@@ -245,7 +249,8 @@ export const RNGalleryList: Array<IRNGalleryExample> = [
     component: SwitchExamplePage,
     textIcon: '\uF19E',
     imageIcon: require('../assets/ControlImages/ToggleSwitch.png'),
-    subtitle: "A button that can be switched between two states like a CheckBox.",
+    subtitle:
+      'A button that can be switched between two states like a CheckBox.',
     type: 'Basic Input',
   },
   {
@@ -253,7 +258,7 @@ export const RNGalleryList: Array<IRNGalleryExample> = [
     component: TextExamplePage,
     textIcon: '\uE8D2',
     imageIcon: require('../assets/ControlImages/TextBlock.png'),
-    subtitle: "A lightweight control for displaying small amounts of text.",
+    subtitle: 'A lightweight control for displaying small amounts of text.',
     type: 'Text',
   },
   {
@@ -261,7 +266,7 @@ export const RNGalleryList: Array<IRNGalleryExample> = [
     component: TextInputExamplePage,
     textIcon: '\uE90A',
     imageIcon: require('../assets/ControlImages/TextBox.png'),
-    subtitle: "A single-line or multi-line plain text field.",
+    subtitle: 'A single-line or multi-line plain text field.',
     type: 'Text',
   },
   {
@@ -269,7 +274,7 @@ export const RNGalleryList: Array<IRNGalleryExample> = [
     component: TimePickerExamplePage,
     textIcon: '\uE823',
     imageIcon: require('../assets/ControlImages/TimePicker.png'),
-    subtitle: "A configurable control that lets a user pick a time value.",
+    subtitle: 'A configurable control that lets a user pick a time value.',
     type: 'Date & time',
   },
   {
@@ -316,7 +321,8 @@ export const RNGalleryList: Array<IRNGalleryExample> = [
     component: WebViewExamplePage,
     textIcon: '\uE774',
     imageIcon: require('../assets/ControlImages/WebView.png'),
-    subtitle: "A Microsoft Edge (Chromium) based control that hosts HTML content in an app.",
+    subtitle:
+      'A Microsoft Edge (Chromium) based control that hosts HTML content in an app.',
     type: 'Media',
   },
   {

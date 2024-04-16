@@ -83,7 +83,7 @@ function RenderDrawer(props) {
       />
     );
   });
-};
+}
 
 function CustomDrawerContent(props) {
   const isDrawerOpen =

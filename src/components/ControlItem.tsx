@@ -1,5 +1,12 @@
 'use strict';
-import {StyleSheet, View, Text, PlatformColor, Pressable, Image} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  PlatformColor,
+  Pressable,
+  Image,
+} from 'react-native';
 import React from 'react';
 import type {ImageSourcePropType} from 'react-native';
 import {useTheme} from '@react-navigation/native';
@@ -8,12 +15,12 @@ const createStyles = (colors: any, isHovered: boolean, isPressing: boolean) =>
   StyleSheet.create({
     controlItem: {
       backgroundColor: PlatformColor('CardBackgroundFillColorDefaultBrush'),
-      borderColor: 
-        isPressing ? 
-          PlatformColor('TextFillColorSecondaryBrush') :
-          isHovered ?
-            PlatformColor('ControlStrokeColorSecondary') :
-            PlatformColor('CardStrokeColorDefaultBrush'),
+      borderColor:
+        isPressing
+        ? PlatformColor('TextFillColorSecondaryBrush')
+        : isHovered
+        ? PlatformColor('ControlStrokeColorSecondary')
+        : PlatformColor('CardStrokeColorDefaultBrush'),
       borderWidth: 1,
       borderBottomWidth: 1,
       padding: 8,
@@ -39,16 +46,16 @@ const createStyles = (colors: any, isHovered: boolean, isPressing: boolean) =>
     controlItemTitle: {
       // BodyStrongTextBlockStyle
       fontWeight: '600', // SemiBold
-      color: 
-        isHovered ?
-          PlatformColor('TextFillColorSecondaryBrush') : 
-          PlatformColor('TextFillColorPrimaryBrush'),
+      color:
+        isHovered
+        ? PlatformColor('TextFillColorSecondaryBrush')
+        : PlatformColor('TextFillColorPrimaryBrush'),
     },
     controlItemSubtitle: {
       // CaptionTextBlockStyle
       color: PlatformColor('TextFillColorSecondaryBrush'),
-      fontSize: 12
-    }
+      fontSize: 12,
+    },
   });
 
 type HomeComponentTileProps = {
@@ -58,7 +65,13 @@ type HomeComponentTileProps = {
   imageIcon?: ImageSourcePropType;
   navigation: any;
 };
-const HomeComponentTile = ({pageKey, subtitle, textIcon, imageIcon, navigation}: HomeComponentTileProps) => {
+const HomeComponentTile = ({
+  pageKey,
+  subtitle,
+  textIcon,
+  imageIcon,
+  navigation,
+}: HomeComponentTileProps) => {
   const {colors} = useTheme();
   const [isHovered, setIsHovered] = React.useState(false);
   const [isPressing, setIsPressing] = React.useState(false);
@@ -69,13 +82,9 @@ const HomeComponentTile = ({pageKey, subtitle, textIcon, imageIcon, navigation}:
     <Pressable
       accessibilityRole="button"
       accessibilityLabel={
-        pageKey === 'Button'
-          ? 'Button1 control'
-          : pageKey + ' control'
+        pageKey === 'Button' ? 'Button1 control' : pageKey + ' control'
       }
-      accessibilityHint={
-        'click to view the ' + pageKey + ' sample page'
-      }
+      accessibilityHint={'click to view the ' + pageKey + ' sample page'}
       style={styles.controlItem}
       onPress={() => {
         navigation.navigate(pageKey);
@@ -84,22 +93,30 @@ const HomeComponentTile = ({pageKey, subtitle, textIcon, imageIcon, navigation}:
       onPressOut={() => setIsPressing(false)}
       onHoverIn={() => setIsHovered(true)}
       onHoverOut={() => setIsHovered(false)}>
-      {imageIcon ?
-        <Image source={imageIcon} style={styles.controlItemIcon}/> :
+      {imageIcon ? (
+        <Image source={imageIcon} style={styles.controlItemIcon} />
+      ) : (
         <View>
-          <Image source={require('../../assets/ControlImages/Placeholder.png')} style={styles.controlItemIcon}/>
-          <Text style={[styles.textIcon, {position: 'absolute', marginTop: 28, color: PlatformColor('TextOnAccentFillColorPrimaryBrush')}]}>{textIcon}</Text>
+          <Image
+            source={require('../../assets/ControlImages/Placeholder.png')}
+            style={styles.controlItemIcon}
+          />
+          <Text
+            style={[
+              styles.textIcon,
+              {
+                position: 'absolute',
+                marginTop: 28,
+                color: PlatformColor('TextOnAccentFillColorPrimaryBrush'),
+              },
+            ]}>
+            {textIcon}
+          </Text>
         </View>
-          
-      }
+      )}
       <View style={{flexShrink: 1}}>
-        <Text
-          style={styles.controlItemTitle}>
-          {pageKey}
-        </Text>
-        <Text style={styles.controlItemSubtitle}>
-          {subtitle}
-        </Text>
+        <Text style={styles.controlItemTitle}>{pageKey}</Text>
+        <Text style={styles.controlItemSubtitle}>{subtitle}</Text>
       </View>
     </Pressable>
   );

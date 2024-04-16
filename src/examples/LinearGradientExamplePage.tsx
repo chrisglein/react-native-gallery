@@ -32,19 +32,18 @@ export const LinearGradientExamplePage: React.FunctionComponent<{}> = () => {
         },
       ]}>
       <Example title="Horizontal Gradient" code={example1jsx}>
-      <LinearGradient
-        start={{x: 0, y: 0}}
-        end={{x: 1, y: 0}}
-        colors={['#4c669f', '#3b5998', '#192f6a']}
-        style={{
-          paddingHorizontal: 24,
-          paddingVertical: 8,
-          borderRadius: 8,
-          alignSelf: 'flex-start'}}>
-        <Text>
-          Text within a gradient fill
-        </Text>
-      </LinearGradient>
+        <LinearGradient
+          start={{x: 0, y: 0}}
+          end={{x: 1, y: 0}}
+          colors={['#4c669f', '#3b5998', '#192f6a']}
+          style={{
+            paddingHorizontal: 24,
+            paddingVertical: 8,
+            borderRadius: 8,
+            alignSelf: 'flex-start',
+          }}>
+          <Text>Text within a gradient fill</Text>
+        </LinearGradient>
       </Example>
     </Page>
   );

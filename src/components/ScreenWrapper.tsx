@@ -50,9 +50,12 @@ const styles = StyleSheet.create({
 });
 
 type ScreenWrapperProps = React.PropsWithChildren<{
-  doNotInset?: boolean,
+  doNotInset?: boolean;
 }>;
-export function ScreenWrapper({children, doNotInset}: ScreenWrapperProps): JSX.Element {
+export function ScreenWrapper({
+  children,
+  doNotInset,
+}: ScreenWrapperProps): JSX.Element {
   const navigation = useNavigation();
 
   return (

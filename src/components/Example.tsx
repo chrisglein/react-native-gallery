@@ -1,12 +1,6 @@
 import React from 'react';
 import {Code} from './Code';
-import {
-  Pressable,
-  StyleSheet,
-  PlatformColor,
-  Text,
-  View,
-} from 'react-native';
+import {Pressable, StyleSheet, PlatformColor, Text, View} from 'react-native';
 import {useTheme} from '@react-navigation/native';
 import Clipboard from '@react-native-clipboard/clipboard';
 
@@ -50,7 +44,11 @@ const createStyles = (colors: any) =>
 const createButtonStyles = (isHovered: boolean, isPressing: boolean) =>
   StyleSheet.create({
     background: {
-      backgroundColor: isPressing ? PlatformColor('ControlFillColorTertiaryBrush') : isHovered ? PlatformColor('ControlFillColorSecondaryBrush') : PlatformColor('ControlFillColorDefaultBrush'),
+      backgroundColor: isPressing
+        ? PlatformColor('ControlFillColorTertiaryBrush')
+        : isHovered
+        ? PlatformColor('ControlFillColorSecondaryBrush')
+        : PlatformColor('ControlFillColorDefaultBrush'),
       borderRadius: 8,
       borderWidth: 1,
       borderColor: PlatformColor('ControlStrokeColorDefaultBrush'),
@@ -66,7 +64,7 @@ const createButtonStyles = (isHovered: boolean, isPressing: boolean) =>
 type CopyToClipboardButtonProps = {
   content: string;
 };
-const CopyToClipboardButton = ({content} : CopyToClipboardButtonProps) => {
+const CopyToClipboardButton = ({content}: CopyToClipboardButtonProps) => {
   const [isHovered, setIsHovered] = React.useState(false);
   const [isPressing, setIsPressing] = React.useState(false);
   const styles = createButtonStyles(isHovered, isPressing);
@@ -84,15 +82,14 @@ const CopyToClipboardButton = ({content} : CopyToClipboardButtonProps) => {
       onHoverOut={() => setIsHovered(false)}>
       <Text style={styles.text}>{copyIcon}</Text>
     </Pressable>
-  )
+  );
 };
 
 export function Example(props: {
   title: string;
   code: string;
   children: React.ReactNode;
-})
-{
+}) {
   const {colors} = useTheme();
   const styles = createStyles(colors);
   return (
@@ -106,7 +103,7 @@ export function Example(props: {
           <View style={styles.codeContainer}>
             <Code>{props.code}</Code>
             <View style={{position: 'absolute', right: 12, top: 12}}>
-              <CopyToClipboardButton content={props.code}/>
+              <CopyToClipboardButton content={props.code} />
             </View>
           </View>
         </View>

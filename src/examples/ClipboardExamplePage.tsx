@@ -1,17 +1,14 @@
 'use strict';
 import React, {useState} from 'react';
-import {
-  Button,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
+import {Button, Text, TextInput, View} from 'react-native';
 import {Example} from '../components/Example';
 import {Page} from '../components/Page';
 import Clipboard from '@react-native-clipboard/clipboard';
 
 export const ClipboardExamplePage: React.FunctionComponent<{}> = () => {
-  const [textToCopy, setTextToCopy] = useState('This text will be copied to the clipboard');
+  const [textToCopy, setTextToCopy] = useState(
+    'This text will be copied to the clipboard',
+  );
   const [textFromClipboard, setTextFromClipboard] = useState('');
   const example1jsx = `<Button
   title="Copy text to the Clipboard"
@@ -47,7 +44,8 @@ export const ClipboardExamplePage: React.FunctionComponent<{}> = () => {
         <View style={{alignItems: 'flex-start', gap: 12}}>
           <Button
             title="Copy text to the Clipboard"
-            onPress={() => Clipboard.setString(textToCopy)} />
+            onPress={() => Clipboard.setString(textToCopy)}
+          />
           <TextInput value={textToCopy} onChangeText={setTextToCopy} />
         </View>
       </Example>
@@ -56,7 +54,8 @@ export const ClipboardExamplePage: React.FunctionComponent<{}> = () => {
         <View style={{alignItems: 'flex-start', gap: 12}}>
           <Button
             title="Paste text from the Clipboard"
-            onPress={() => getClipboardText()}/>
+            onPress={() => getClipboardText()}
+          />
           <Text>{textFromClipboard}</Text>
         </View>
       </Example>

@@ -94,10 +94,7 @@ export function Page(props: {
   return isScreenFocused ? (
     <ScreenWrapper style={styles.container}>
       <View style={styles.titlePane}>
-        <Text
-          accessible
-          accessibilityRole={'header'}
-          style={styles.title}>
+        <Text accessible accessibilityRole={'header'} style={styles.title}>
           {props.title}
         </Text>
         <View>
