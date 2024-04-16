@@ -5,8 +5,10 @@ import {HomePage} from './HomePage';
 import {SettingsPage} from './SettingsPage';
 import {ButtonExamplePage} from './examples/ButtonExamplePage';
 import {CheckBoxExamplePage} from './examples/CheckBoxExamplePage';
+import {ClipboardExamplePage} from './examples/ClipboardExamplePage';
 import {ConfigExamplePage} from './examples/ConfigExamplePage';
 import {DatePickerExamplePage} from './examples/DatePickerExamplePage';
+import {LinearGradientExamplePage} from './examples/LinearGradientExamplePage';
 import {TimePickerExamplePage} from './examples/TimePickerExamplePage';
 import {SketchExamplePage} from './examples/SketchExamplePage';
 import {SliderExamplePage} from './examples/SliderExamplePage';
@@ -48,6 +50,7 @@ let RNGalleryCategories = [
   'Scrolling',
   'Status and Info',
   'Text',
+  'System',
   'Legacy',
 ];
 
@@ -88,6 +91,13 @@ export const RNGalleryList: Array<IRNGalleryExample> = [
     imageIcon: require('../assets/ControlImages/Checkbox.png'),
     subtitle: "A control that a user can select or clear.",
     type: 'Basic Input',
+  },
+  {
+    key: 'Clipboard',
+    component: ClipboardExamplePage,
+    textIcon: '\uE8C8',
+    imageIcon: require('../assets/ControlImages/Clipboard.png'),
+    type: 'System',
   },
   {
     key: 'Config',
@@ -138,6 +148,12 @@ export const RNGalleryList: Array<IRNGalleryExample> = [
     textIcon: '\uEB9F',
     imageIcon: require('../assets/ControlImages/Image.png'),
     subtitle: "A control to display image content.",
+    type: 'Media',
+  },
+  {
+    key: 'Linear Gradient',
+    component: LinearGradientExamplePage,
+    textIcon: '\uE790',
     type: 'Media',
   },
   {

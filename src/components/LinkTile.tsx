@@ -29,7 +29,7 @@ export function LinkTile(props: {
       <Text accessibilityRole="header" style={styles.hyperlinkTileTitle}>
         {props.title}
       </Text>
-      {props.links.map((hyp) => (
+      {props.links?.map((hyp) => (
         <HyperlinkButton
           key={hyp.label}
           content={{string: hyp.label}}
