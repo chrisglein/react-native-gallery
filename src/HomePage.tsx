@@ -54,7 +54,6 @@ const createStyles = (colors: any) =>
       opacity: 0.9,
     },
     pageHeader: {
-      paddingLeft: 36,
     },
     pageTitleContainer: {
       height: 204,
@@ -65,7 +64,13 @@ const createStyles = (colors: any) =>
       // TitleLargeTextBlockStyle
       fontSize: 40,
       fontWeight: "600", // SemiBold
+      paddingLeft: 36,
     },
+    controlItems: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      gap: 12
+    }
   });
 
   
@@ -119,6 +124,9 @@ const HomeContainer = (props: {heading: string; children: React.ReactNode}) => {
 };
 
 const RenderHomeComponentTiles = (indicies: number[], navigation) => {
+  const {colors} = useTheme();
+  const styles = createStyles(colors);
+  
   var homeComponentTiles = [];
   for (var i = 0; i < indicies.length; i++) {
     let index = indicies[i];
@@ -135,7 +143,7 @@ const RenderHomeComponentTiles = (indicies: number[], navigation) => {
   }
 
   return (
-    <View style={{flexDirection: 'row', flexWrap: 'wrap', gap: 8}}>
+    <View style={styles.controlItems}>
       {homeComponentTiles}
     </View>
   )

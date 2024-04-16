@@ -4,16 +4,31 @@ import React from 'react';
 import type {ImageSourcePropType} from 'react-native';
 import {useTheme} from '@react-navigation/native';
 
-const createStyles = (colors: any) =>
+const createStyles = (colors: any, isHovered: boolean, isPressing: boolean) =>
   StyleSheet.create({
+    controlItem: {
+      backgroundColor: PlatformColor('CardBackgroundFillColorDefaultBrush'),
+      borderColor: 
+        isPressing ? 
+          PlatformColor('TextFillColorSecondaryBrush') :
+          isHovered ?
+            PlatformColor('ControlStrokeColorSecondary') :
+            PlatformColor('CardStrokeColorDefaultBrush'),
+      borderWidth: 1,
+      borderBottomWidth: 1,
+      padding: 8,
+      borderRadius: 4,
+      alignItems: 'center',
+      flexDirection: 'row',
+      gap: 16,
+      width: 360,
+      height: 90,
+    },
     textIcon: {
       fontFamily: 'Segoe MDL2 Assets',
       fontSize: 16,
       width: 72,
       textAlign: 'center',
-    },
-    controlItem: {
-      padding: 10,
     },
     controlItemIcon: {
       marginHorizontal: 12,
@@ -23,7 +38,11 @@ const createStyles = (colors: any) =>
     },
     controlItemTitle: {
       // BodyStrongTextBlockStyle
-      fontWeight: '500', // SemiBold
+      fontWeight: '600', // SemiBold
+      color: 
+        isHovered ?
+          PlatformColor('TextFillColorSecondaryBrush') : 
+          PlatformColor('TextFillColorPrimaryBrush'),
     },
     controlItemSubtitle: {
       // CaptionTextBlockStyle
@@ -41,10 +60,9 @@ type HomeComponentTileProps = {
 };
 const HomeComponentTile = ({pageKey, subtitle, textIcon, imageIcon, navigation}: HomeComponentTileProps) => {
   const {colors} = useTheme();
-  const styles = createStyles(colors);
-
   const [isHovered, setIsHovered] = React.useState(false);
   const [isPressing, setIsPressing] = React.useState(false);
+  const styles = createStyles(colors, isHovered, isPressing);
 
   return (
     // https://github.com/microsoft/WinUI-Gallery/blob/c3cf8db5607c71f5df51fd4eb45d0ce6e932d338/WinUIGallery/ItemTemplates.xaml#L7
@@ -58,23 +76,7 @@ const HomeComponentTile = ({pageKey, subtitle, textIcon, imageIcon, navigation}:
       accessibilityHint={
         'click to view the ' + pageKey + ' sample page'
       }
-      style={({pressed}) => [
-        {
-          backgroundColor: colors.background,
-          borderColor: colors.border,
-          borderWidth: 1,
-          borderBottomWidth: pressed ? 1 : 2,
-          padding: 8,
-          borderRadius: 4,
-          alignItems: 'center',
-          flexDirection: 'row',
-          marginRight: 5,
-          marginBottom: 5,
-          gap: 16,
-          width: 360,
-          height: 90,
-        },
-      ]}
+      style={styles.controlItem}
       onPress={() => {
         navigation.navigate(pageKey);
       }}

@@ -14,9 +14,13 @@ const createStyles = (colors: any, isHovered: boolean, isPressing: boolean) =>
     headerTile: {
       // https://github.com/microsoft/WinUI-Gallery/blob/c3cf8db5607c71f5df51fd4eb45d0ce6e932d338/WinUIGallery/Controls/HeaderTile.xaml#L12
       backgroundColor: 
-        isHovered ? PlatformColor('SystemColorWindowColor') : PlatformColor('AcrylicInAppFillColorDefaultBrush'),
+        isHovered ?
+          PlatformColor('SystemColorWindowColor') : 
+          PlatformColor('AcrylicInAppFillColorDefaultBrush'),
       borderColor: 
-        isHovered ? PlatformColor('ControlStrokeColorSecondary') : PlatformColor('SurfaceStrokeColorFlyoutBrush'),
+        isHovered ?
+          PlatformColor('ControlStrokeColorSecondary') :
+          PlatformColor('SurfaceStrokeColorFlyoutBrush'),
       borderWidth: 1,
       borderRadius: 8,
       padding: 24,
@@ -145,7 +149,11 @@ const TileGallery = () => {
     <HorizontalListWithPageNavigation
       spacing={12}
       data={items}
-      renderItem={({item}) => item}/>
+      renderItem={({item}) => item}
+      style={{paddingBottom: 0}}
+      ListHeaderComponent={() => <View style={{width: 36}} />}
+      ListFooterComponent={() => <View style={{width: 36}} />}
+      />
   )
 };
   
