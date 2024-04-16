@@ -2,11 +2,11 @@
 import {StyleSheet, View, Text, ScrollView, Image} from 'react-native';
 import React from 'react';
 import {useTheme, useIsFocused} from '@react-navigation/native';
-import RNGalleryList from './RNGalleryList';
+import RNGalleryList, {RNGalleryCategories} from './RNGalleryList';
 import {ScreenWrapper} from './components/ScreenWrapper';
-import {TileGallery} from './TileGallery';
+import {TileGallery} from './components/TileGallery';
+import {HomeComponentTile} from './components/ControlItem';
 import LinearGradient from 'react-native-linear-gradient';
-import {HomeComponentTile} from './ControlItem';
 
 const createStyles = (colors: any) =>
   StyleSheet.create({
@@ -142,17 +142,9 @@ const RenderHomeComponentTiles = (indicies: number[], navigation) => {
 };
 
 const RenderPageContent = ({navigation}) => {
-  let categories = [
-    'Basic Input',
-    'Date and Time',
-    'Dialogs and Flyouts',
-    'Layout',
-    'Text',
-    'Status and Info',
-    'Media',
-  ];
+  let categories = RNGalleryCategories;
   let categoryMap = new Map();
-  categories.forEach((category) => {
+  RNGalleryCategories.forEach((category) => {
     categoryMap.set(category, []);
   });
 

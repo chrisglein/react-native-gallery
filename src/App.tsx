@@ -59,34 +59,29 @@ const styles = StyleSheet.create({
   },
 });
 
-function RenderDrawerItem(props, i: number) {
+function RenderDrawer(props) {
   const isDrawerOpen =
     getDrawerStatusFromState(props.navigation.getState()) == 'open';
-  return (
-    <DrawerItem
-      importantForAccessibility={isDrawerOpen ? 'auto' : 'no-hide-descendants'}
-      key={RNGalleryList[i].key}
-      label={() => {
-        return <Text style={styles.drawerText}>{RNGalleryList[i].key}</Text>;
-      }}
-      onPress={() => props.navigation.navigate(RNGalleryList[i].key)}
-      icon={() => {
-        return <Text style={styles.icon}>{RNGalleryList[i].icon}</Text>;
-      }}
-      accessibilityLabel={RNGalleryList[i].key}
-    />
-  );
-}
 
-function RenderDrawer(props) {
-  var items = [];
-  // Begin iteration at index 2 because Home and
-  // Settings drawer items have already been manually loaded.
-  for (var i = 2; i < RNGalleryList.length; i++) {
-    items.push(RenderDrawerItem(props, i));
-  }
-  return items;
-}
+  // Home and Settings drawer items have already been manually loaded.
+  const filterPredicate = (item) => item.key === 'Home' || item.key === 'Settings';
+  RNGalleryList.filter(filterPredicate).map((item) => {
+    return (
+      <DrawerItem
+        importantForAccessibility={isDrawerOpen ? 'auto' : 'no-hide-descendants'}
+        key={item.key}
+        label={() => {
+          return <Text style={styles.drawerText}>{item.key}</Text>;
+        }}
+        onPress={() => props.navigation.navigate(item.key)}
+        icon={() => {
+          return <Text style={styles.icon}>{item.textIcon}</Text>;
+        }}
+        accessibilityLabel={item.key}
+      />
+    );
+  });
+};
 
 function CustomDrawerContent(props) {
   const isDrawerOpen =

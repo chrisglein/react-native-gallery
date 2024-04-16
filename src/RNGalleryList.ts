@@ -38,6 +38,16 @@ import {ExpanderExamplePage} from './examples/ExpanderExamplePage';
 import {VirtualizedListExamplePage} from './examples/VirtualizedListExamplePage';
 import {NetworkExamplePage} from './examples/NetworkExamplePage';
 
+let RNGalleryCategories = [
+  'Basic Input',
+  'Date and Time',
+  'Dialogs and Flyouts',
+  'Layout',
+  'Text',
+  'Status and Info',
+  'Media',
+];
+
 interface IRNGalleryExample {
   key: string;
   component: React.ElementType;
@@ -304,3 +314,4 @@ export const RNGalleryList: Array<IRNGalleryExample> = [
 ];
 
 export default RNGalleryList;
+export {RNGalleryCategories};
