@@ -45,6 +45,7 @@
     "react-native-sensitive-info": "6.0.0-alpha.9",
     "react-native-track-player": "JaneaSystems/react-native-track-player#windows_cpp2",
     "react-native-tts": "ak1394/react-native-tts",
+    "react-native-video": "^5.2.1",
     "react-native-webview": "^13.2.2",
     "react-native-windows": "0.73.10",
     "react-native-xaml": "^0.0.74"

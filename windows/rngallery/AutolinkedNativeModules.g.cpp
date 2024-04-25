@@ -51,6 +51,9 @@
 // Includes from react-native-tts
 #include <winrt/RNTTS.h>
 
+// Includes from react-native-video
+#include <winrt/ReactNativeVideoCPP.h>
+
 // Includes from react-native-webview
 #include <winrt/ReactNativeWebView.h>
 
@@ -97,6 +100,8 @@ void RegisterAutolinkedNativeModulePackages(winrt::Windows::Foundation::Collecti
     packageProviders.Append(winrt::RNTrackPlayer::ReactPackageProvider());
     // IReactPackageProviders from react-native-tts
     packageProviders.Append(winrt::RNTTS::ReactPackageProvider());
+    // IReactPackageProviders from react-native-video
+    packageProviders.Append(winrt::ReactNativeVideoCPP::ReactPackageProvider());
     // IReactPackageProviders from react-native-webview
     packageProviders.Append(winrt::ReactNativeWebView::ReactPackageProvider());
     // IReactPackageProviders from react-native-xaml

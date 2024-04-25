@@ -1,0 +1,152 @@
+diff --git a/node_modules/react-native-video/windows/ReactNativeVideoCPP/ReactNativeVideoCPP.vcxproj b/node_modules/react-native-video/windows/ReactNativeVideoCPP/ReactNativeVideoCPP.vcxproj
+index 1cd76da..a1ac34f 100644
+--- a/node_modules/react-native-video/windows/ReactNativeVideoCPP/ReactNativeVideoCPP.vcxproj
++++ b/node_modules/react-native-video/windows/ReactNativeVideoCPP/ReactNativeVideoCPP.vcxproj
+@@ -13,13 +13,16 @@
+     <AppContainerApplication>true</AppContainerApplication>
+     <ApplicationType>Windows Store</ApplicationType>
+     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+-    <WindowsTargetPlatformVersion Condition=" '$(WindowsTargetPlatformVersion)' == '' ">10.0.18362.0</WindowsTargetPlatformVersion>
+-    <WindowsTargetPlatformMinVersion>10.0.16299.0</WindowsTargetPlatformMinVersion>
+   </PropertyGroup>
+-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+   <PropertyGroup Label="ReactNativeWindowsProps">
+-    <ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(SolutionDir), 'node_modules\react-native-windows\package.json'))\node_modules\react-native-windows\</ReactNativeWindowsDir>
++    <ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'node_modules\react-native-windows\package.json'))\node_modules\react-native-windows\</ReactNativeWindowsDir>
++  </PropertyGroup>
++  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.WindowsSdk.Default.props" Condition="Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.WindowsSdk.Default.props')" />
++  <PropertyGroup Label="Fallback Windows SDK Versions">
++   <WindowsTargetPlatformVersion Condition=" '$(WindowsTargetPlatformVersion)' == '' ">10.0.18362.0</WindowsTargetPlatformVersion>
++   <WindowsTargetPlatformMinVersion Condition=" '$(WindowsTargetPlatformMinVersion)' == '' ">10.0.16299.0</WindowsTargetPlatformMinVersion>
+   </PropertyGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+   <ItemGroup Label="ProjectConfigurations">
+     <ProjectConfiguration Include="Debug|ARM">
+       <Configuration>Debug</Configuration>
+diff --git a/node_modules/react-native-video/windows/ReactNativeVideoCPP/packages.lock.json b/node_modules/react-native-video/windows/ReactNativeVideoCPP/packages.lock.json
+new file mode 100644
+index 0000000..03e25e5
+--- /dev/null
++++ b/node_modules/react-native-video/windows/ReactNativeVideoCPP/packages.lock.json
+@@ -0,0 +1,120 @@
++{
++  "version": 1,
++  "dependencies": {
++    "native,Version=v0.0": {
++      "Microsoft.UI.Xaml": {
++        "type": "Direct",
++        "requested": "[2.8.0, )",
++        "resolved": "2.8.0",
++        "contentHash": "vxdHxTr63s5KVtNddMFpgvjBjUH50z7seq/5jLWmmSuf8poxg+sXrywkofUdE8ZstbpO9y3FL/IXXUcPYbeesA==",
++        "dependencies": {
++          "Microsoft.Web.WebView2": "1.0.1264.42"
++        }
++      },
++      "Microsoft.Windows.CppWinRT": {
++        "type": "Direct",
++        "requested": "[2.0.211028.7, )",
++        "resolved": "2.0.211028.7",
++        "contentHash": "JBGI0c3WLoU6aYJRy9Qo0MLDQfObEp+d4nrhR95iyzf7+HOgjRunHDp/6eGFREd7xq3OI1mll9ecJrMfzBvlyg=="
++      },
++      "boost": {
++        "type": "Transitive",
++        "resolved": "1.76.0",
++        "contentHash": "p+w3YvNdXL8Cu9Fzrmexssu0tZbWxuf6ywsQqHjDlKFE5ojXHof1HIyMC3zDLfLnh80dIeFcEUAuR2Asg/XHRA=="
++      },
++      "Microsoft.JavaScript.Hermes": {
++        "type": "Transitive",
++        "resolved": "0.1.18",
++        "contentHash": "5K8rRihGwIs2XNOTP2Jsw3T6cegxCBQXcpPS4optONU/AmFElGAfnA6XBQJ4UqlCFCl9Nf9zQrgvCUPBWYHiag=="
++      },
++      "Microsoft.Web.WebView2": {
++        "type": "Transitive",
++        "resolved": "1.0.1264.42",
++        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
++      },
++      "common": {
++        "type": "Project",
++        "dependencies": {
++          "boost": "[1.76.0, )"
++        }
++      },
++      "fmt": {
++        "type": "Project"
++      },
++      "folly": {
++        "type": "Project",
++        "dependencies": {
++          "boost": "[1.76.0, )",
++          "fmt": "[1.0.0, )"
++        }
++      },
++      "microsoft.reactnative": {
++        "type": "Project",
++        "dependencies": {
++          "Common": "[1.0.0, )",
++          "Folly": "[1.0.0, )",
++          "Microsoft.JavaScript.Hermes": "[0.1.18, )",
++          "Microsoft.UI.Xaml": "[2.8.0, )",
++          "ReactCommon": "[1.0.0, )",
++          "boost": "[1.76.0, )"
++        }
++      },
++      "reactcommon": {
++        "type": "Project",
++        "dependencies": {
++          "Folly": "[1.0.0, )",
++          "boost": "[1.76.0, )"
++        }
++      }
++    },
++    "native,Version=v0.0/win10-arm": {
++      "Microsoft.Web.WebView2": {
++        "type": "Transitive",
++        "resolved": "1.0.1264.42",
++        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
++      }
++    },
++    "native,Version=v0.0/win10-arm-aot": {
++      "Microsoft.Web.WebView2": {
++        "type": "Transitive",
++        "resolved": "1.0.1264.42",
++        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
++      }
++    },
++    "native,Version=v0.0/win10-arm64-aot": {
++      "Microsoft.Web.WebView2": {
++        "type": "Transitive",
++        "resolved": "1.0.1264.42",
++        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
++      }
++    },
++    "native,Version=v0.0/win10-x64": {
++      "Microsoft.Web.WebView2": {
++        "type": "Transitive",
++        "resolved": "1.0.1264.42",
++        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
++      }
++    },
++    "native,Version=v0.0/win10-x64-aot": {
++      "Microsoft.Web.WebView2": {
++        "type": "Transitive",
++        "resolved": "1.0.1264.42",
++        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
++      }
++    },
++    "native,Version=v0.0/win10-x86": {
++      "Microsoft.Web.WebView2": {
++        "type": "Transitive",
++        "resolved": "1.0.1264.42",
++        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
++      }
++    },
++    "native,Version=v0.0/win10-x86-aot": {
++      "Microsoft.Web.WebView2": {
++        "type": "Transitive",
++        "resolved": "1.0.1264.42",
++        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
++      }
++    }
++  }
++}
+\ No newline at end of file
