@@ -24,6 +24,7 @@ import {
 import {PlatformColor} from 'react-native';
 import {AppTheme} from 'react-native-windows';
 import HighContrastTheme from './themes/HighContrastTheme';
+import {HamburgerButton} from './components/ScreenWrapper';
 
 const styles = StyleSheet.create({
   menu: {
@@ -286,14 +287,7 @@ function CustomDrawerContent({navigation}) {
   }
   return (
     <View style={styles.drawer}>
-      <Pressable
-        accessibilityRole="button"
-        accessibilityLabel="Navigation bar expanded"
-        {...{tooltip: 'Collapse Menu'}}
-        style={styles.menu}
-        onPress={() => navigation.closeDrawer()}>
-        <Text style={styles.icon}>&#xE700;</Text>
-      </Pressable>
+      <HamburgerButton navigation={navigation} expanded={true} />
       <DrawerListItem
         route="Home"
         label="Home"

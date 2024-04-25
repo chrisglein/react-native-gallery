@@ -2,7 +2,6 @@ import React from 'react';
 import {
   View,
   StyleSheet,
-  TouchableHighlight,
   Text,
   PlatformColor,
   Pressable,
@@ -51,10 +50,38 @@ const createStyles = (colorScheme) =>
     },
   });
 
+type HamburgerButtonProps = {
+  expanded: boolean;
+  navigation: any;
+};
+const HamburgerButton = ({navigation, expanded}: HamburgerButtonProps) => {
+  const colorScheme = useColorScheme();
+  const styles = createStyles(colorScheme);
+  return (
+    // requires react-native-gesture-handler to be imported in order to pass testing.
+    // blocked by #125
+    //accessibilityState={{expanded: useIsDrawerOpen()}}
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={
+        expanded ? 'Navigation bar expanded' : 'Navigation bar hamburger icon'
+      }
+      {...{tooltip: expanded ? 'Collapse Menu' : 'Expand Menu'}}
+      style={styles.menu}
+      onPress={() =>
+        expanded
+          ? navigation.closeDrawer()
+          : navigation.dispatch(DrawerActions.openDrawer())
+      }>
+      <Text style={styles.icon}>&#xE700;</Text>
+    </Pressable>
+  );
+};
+
 type ScreenWrapperProps = React.PropsWithChildren<{
   doNotInset?: boolean;
 }>;
-export function ScreenWrapper({
+function ScreenWrapper({
   children,
   doNotInset,
 }: ScreenWrapperProps): JSX.Element {
@@ -77,19 +104,7 @@ export function ScreenWrapper({
           navigation.dispatch(DrawerActions.openDrawer());
         }}>
         <View>
-          <TouchableHighlight
-            accessibilityRole="button"
-            accessibilityLabel="Navigation bar hamburger icon"
-            {...{tooltip: 'Expand Menu'}}
-            // requires react-native-gesture-handler to be imported in order to pass testing.
-            // blocked by #125
-            //accessibilityState={{expanded: useIsDrawerOpen()}}
-            style={styles.menu}
-            onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
-            activeOpacity={0.5783}
-            underlayColor="rgba(0, 0, 0, 0.0241);">
-            <Text style={styles.icon}>&#xE700;</Text>
-          </TouchableHighlight>
+          <HamburgerButton navigation={navigation} expanded={false} />
         </View>
       </Pressable>
       <View style={[styles.navItem, doNotInset ? {} : styles.insetNavItem]}>
@@ -98,3 +113,6 @@ export function ScreenWrapper({
     </View>
   );
 }
+
+export default ScreenWrapper;
+export {ScreenWrapper, HamburgerButton};
