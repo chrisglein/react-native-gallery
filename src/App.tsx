@@ -8,10 +8,7 @@ import {
   ScrollView,
 } from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
-import {
-  createDrawerNavigator,
-  getDrawerStatusFromState,
-} from '@react-navigation/drawer';
+import {createDrawerNavigator, useDrawerStatus} from '@react-navigation/drawer';
 import RNGalleryList, {RNGalleryCategories} from './RNGalleryList';
 import LightTheme from './themes/LightTheme';
 import DarkTheme from './themes/DarkTheme';
@@ -42,7 +39,14 @@ const styles = StyleSheet.create({
   },
   drawer: {
     backgroundColor: PlatformColor('NavigationViewDefaultPaneBackground'),
+    width: undefined,
     height: '100%',
+  },
+  drawerOpen: {
+    minWidth: 300,
+  },
+  drawerClosed: {
+    minWidth: 0,
   },
   drawerText: {
     color: PlatformColor('TextControlForeground'),
@@ -193,6 +197,7 @@ const DrawerCollapsibleCategory = ({
     <View
       style={styles.category}
       accessible={true}
+      focusable={true}
       accessibilityRole="button"
       accessibilityLabel={categoryLabel}
       onAccessibilityTap={() => setIsExpanded(!isExpanded)}>
@@ -203,6 +208,7 @@ const DrawerCollapsibleCategory = ({
         onPressOut={() => setIsPressed(false)}
         onHoverIn={() => setIsHovered(true)}
         onHoverOut={() => setIsHovered(false)}
+        focusable={false}
         accessible={false}>
         <View style={styles.indentContainer}>
           <SelectedNavigationItemPill
@@ -276,17 +282,20 @@ const DrawerListView = (props) => {
 };
 
 function CustomDrawerContent({navigation}) {
-  const isDrawerOpen =
-    getDrawerStatusFromState(navigation.getState()) === 'open';
+  const isDrawerOpen = useDrawerStatus() === 'open';
 
   const navigationState = navigation.getState();
   const currentRoute = navigationState.routeNames[navigationState.index];
 
   if (!isDrawerOpen) {
-    return <View />;
+    return (
+      <View style={styles.drawerClosed}>
+        <HamburgerButton navigation={navigation} expanded={false} />
+      </View>
+    );
   }
   return (
-    <View style={styles.drawer}>
+    <View style={styles.drawerOpen}>
       <HamburgerButton navigation={navigation} expanded={true} />
       <DrawerListItem
         route="Home"
@@ -324,7 +333,11 @@ function MyDrawer() {
   return (
     <Drawer.Navigator
       drawerContent={(props) => <CustomDrawerContent {...props} />}
-      screenOptions={{headerShown: false}}>
+      screenOptions={{
+        headerShown: false,
+        drawerType: 'permanent',
+        drawerStyle: styles.drawer,
+      }}>
       {RNGalleryList.map((item) => (
         <Drawer.Screen
           name={item.key}

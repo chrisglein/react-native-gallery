@@ -7,7 +7,7 @@ import {
   Pressable,
   useColorScheme,
 } from 'react-native';
-import {useNavigation, DrawerActions} from '@react-navigation/native';
+import {DrawerActions} from '@react-navigation/native';
 
 const createStyles = (colorScheme) =>
   StyleSheet.create({
@@ -85,28 +85,11 @@ function ScreenWrapper({
   children,
   doNotInset,
 }: ScreenWrapperProps): JSX.Element {
-  const navigation = useNavigation();
   const colorScheme = useColorScheme();
   const styles = createStyles(colorScheme);
 
   return (
     <View style={styles.container}>
-      <Pressable
-        accessibilityRole="button"
-        accessibilityLabel="Navigation bar"
-        // requires react-native-gesture-handler to be imported in order to pass testing.
-        // blocked by #125
-        /*accessibilityState={{
-          expanded: useIsDrawerOpen(),
-        }}*/
-        style={styles.navBar}
-        onPress={() => {
-          navigation.dispatch(DrawerActions.openDrawer());
-        }}>
-        <View>
-          <HamburgerButton navigation={navigation} expanded={false} />
-        </View>
-      </Pressable>
       <View style={[styles.navItem, doNotInset ? {} : styles.insetNavItem]}>
         {children}
       </View>
