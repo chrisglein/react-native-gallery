@@ -4,7 +4,7 @@ import {NativeControlBadge} from './NativeControlBadge';
 import {CoreComponentBadge} from './CoreComponentBadge';
 import {CommunityModuleBadge} from './CommunityModuleBadge';
 import {LinkContainer} from './LinkContainer';
-import {useTheme, useIsFocused} from '@react-navigation/native';
+import {useTheme, useIsFocused} from '../Navigation';
 import {ScreenWrapper} from './ScreenWrapper';
 
 const styles = StyleSheet.create({

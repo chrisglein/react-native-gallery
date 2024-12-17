@@ -8,7 +8,7 @@ import {
   useColorScheme,
 } from 'react-native';
 import React from 'react';
-import {useTheme, useIsFocused} from '@react-navigation/native';
+import {useTheme, useIsFocused} from './Navigation';
 import RNGalleryList from './RNGalleryList';
 import {ScreenWrapper} from './components/ScreenWrapper';
 import {TileGallery} from './components/TileGallery';

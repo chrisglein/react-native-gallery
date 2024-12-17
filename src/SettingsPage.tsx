@@ -9,7 +9,7 @@ import {
   TextBlock,
   TextDecorations,
 } from 'react-native-xaml';
-import {useTheme, useIsFocused} from '@react-navigation/native';
+import {useTheme, useIsFocused} from './Navigation';
 import {ScreenWrapper} from './components/ScreenWrapper';
 var pkg = require('../package.json');
 const createStyles = (colors: any) =>

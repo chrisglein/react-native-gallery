@@ -1,6 +1,6 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import {useTheme} from '@react-navigation/native';
+import {useTheme} from '../Navigation';
 import {HyperlinkButton} from 'react-native-xaml';
 
 const createStyles = (colors: any) =>

@@ -2,7 +2,7 @@ import React from 'react';
 import {Code} from './Code';
 import {StyleSheet, PlatformColor, Text, View} from 'react-native';
 import {CopyToClipboardButton} from './CopyToClipboard';
-import {useTheme} from '@react-navigation/native';
+import {useTheme} from '../Navigation';
 
 const createStyles = (colors: any) =>
   StyleSheet.create({

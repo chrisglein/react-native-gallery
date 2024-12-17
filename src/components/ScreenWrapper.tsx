@@ -8,7 +8,7 @@ import {
   Pressable,
   useColorScheme,
 } from 'react-native';
-import {useNavigation, DrawerActions} from '@react-navigation/native';
+import {useNavigation, DrawerActions} from '../Navigation';
 
 const createStyles = (colorScheme) =>
   StyleSheet.create({

@@ -7,11 +7,8 @@ import {
   useColorScheme,
   ScrollView,
 } from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
-import {
-  createDrawerNavigator,
-  getDrawerStatusFromState,
-} from '@react-navigation/drawer';
+import {NavigationContainer} from './Navigation';
+import {createDrawerNavigator, getDrawerStatusFromState} from './Navigation';
 import RNGalleryList, {RNGalleryCategories} from './RNGalleryList';
 import LightTheme from './themes/LightTheme';
 import DarkTheme from './themes/DarkTheme';

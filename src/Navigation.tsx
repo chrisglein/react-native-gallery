@@ -117,4 +117,80 @@ const createNativeStackNavigator = () => {
     return {}
 };
 
-export { NavigationContainer, StackNavigator, StackScreen, createNativeStackNavigator };
+type DrawerNavigatorProps = PropsWithChildren<{
+    drawerContent: any,
+    screenOptions: any,
+}>;
+type DrawerScreenProps = PropsWithChildren<{
+    name: string,
+    key: string,
+    component: ({ navigation, route }: { navigation: any; route: any; }) => JSX.Element,
+    options: ({navigation}: {navigation: any}) => any,
+}>;
+const createDrawerNavigator = () => {
+  const navigation = {
+    getState: () => {return {routes: [], params: {}, routeNames: []}},
+  };
+
+  return {
+    Navigator: ({drawerContent, screenOptions, children} : DrawerNavigatorProps) => {
+      const drawer = drawerContent({navigation});
+      return (
+        <View>
+          {children}
+          {drawer}
+        </View>
+      );
+    },
+    Screen: ({component, name, key}: DrawerScreenProps) => {
+      return (
+        <View key={key}>
+          {component({navigation: navigation, route: navigation})}
+        </View>
+      )
+    },
+  }
+}
+
+const getDrawerStatusFromState = (state: any) => {
+  return undefined;
+}
+
+const useIsFocused = () => {
+  return true;
+}
+
+const useTheme = () => {
+  return {colors: {
+    primary: '#0066cc',
+    background: '#FFFFFF',
+    card: '#FFFFFF',
+    text: '#505050',
+    border: '#E6E6E6',
+    notification: 'rgb(255, 59, 48)',
+  }};
+}
+
+const Theme = {
+  colors: {
+    primary: '#0066cc',
+    background: '#FFFFFF',
+    card: '#FFFFFF',
+    text: '#505050',
+    border: '#E6E6E6',
+    notification: 'rgb(255, 59, 48)',
+  },
+  dark: false,
+}
+
+const useNavigation = () => {
+  return {push: () => {}, pop: () => {}};
+}
+
+const DrawerActions = {
+  openDrawer: () => {},
+  closeDrawer: () => {},
+  toggleDrawer: () => {},
+}
+
+export { NavigationContainer, StackNavigator, StackScreen, createNativeStackNavigator, createDrawerNavigator, getDrawerStatusFromState, useIsFocused, useTheme, Theme, useNavigation, DrawerActions };

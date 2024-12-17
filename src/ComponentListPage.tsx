@@ -1,7 +1,7 @@
 'use strict';
 import {StyleSheet, View, Text, ScrollView, PlatformColor} from 'react-native';
 import React from 'react';
-import {useIsFocused} from '@react-navigation/native';
+import {useIsFocused} from './Navigation';
 import RNGalleryList, {RNGalleryCategories} from './RNGalleryList';
 import {ScreenWrapper} from './components/ScreenWrapper';
 import {HomeComponentTile} from './components/ControlItem';
