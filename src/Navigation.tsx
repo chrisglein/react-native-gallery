@@ -160,7 +160,7 @@ const DrawerNavigator = ({drawerContent, screenOptions, defaultStatus, children}
     Animated.timing(slideAnim, {
       toValue: drawerDesiredOpen ? 0 : -DEFAULT_DRAWER_WIDTH,
       easing: Easing.in(Easing.linear),
-      duration: 200,
+      duration: drawerDesiredOpen ? 200 : 100,
       useNativeDriver: true,
     }).start(() => {
       // Only when the animation is completed should we actually hide the content
