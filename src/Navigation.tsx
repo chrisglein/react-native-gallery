@@ -1,16 +1,13 @@
 import React, {useState} from 'react';
 import {
   View,
-  Text,
 } from 'react-native';
 import type { PropsWithChildren } from 'react';
-
-//import {NavigationContainer} from '@react-navigation/native';
-//import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 type NavigationContextType = {
   push: (screen: string, parameters : any, navigateFrom: string) => void,
   pop: () => void,
+  navigate: (screen: string, parameters : any) => void,
   currentScreen: string,
   routes: any[],
   parameters: any,
@@ -18,6 +15,7 @@ type NavigationContextType = {
 const NavigationContext = React.createContext<NavigationContextType>({
   push: () => {},
   pop: () => {},
+  navigate: () => {},
   currentScreen: '',
   routes: [],
   parameters: [],
@@ -34,6 +32,7 @@ const NavigationContainer = ({children}: NavigationContainerProps) => {
   const [currentScreen, setCurrentScreen] = useState('Home');
   const [routes, setRoutes] = useState<RouteType[]>([{name: 'Home', key: 'Home', params: {}}]);
   const [parameters, setParameters] = useState({} as any);
+
   const navigationContext = {
     push: (screen: string, parameters: any, navigateFrom: string) => {
       setRoutes([...routes, {name: screen, key: screen, params: parameters}]);
@@ -46,6 +45,11 @@ const NavigationContainer = ({children}: NavigationContainerProps) => {
         setRoutes(routes);
         setCurrentScreen(routes[routes.length - 1].name);
       }
+    },
+    navigate: (screen: string, parameters: any) => {
+      setRoutes([...routes, {name: screen, key: screen, params: parameters}]);
+      setCurrentScreen(screen);
+      setParameters(parameters);
     },
     currentScreen: currentScreen,
     routes: routes,
@@ -82,9 +86,9 @@ const StackNavigator = ({children, initialRouteName}: StackNavigatorProps) => {
 };
 
 type StackScreenProps = PropsWithChildren<{
-    name: string,
-    component: ({ navigation, route }: { navigation: any; route: any; }) => JSX.Element,
-    options: ({navigation}: {navigation: any}) => any,
+  name: string,
+  component: ({ navigation, route }: { navigation: any; route: any; }) => JSX.Element,
+  options: ({navigation}: {navigation: any}) => any,
 }>;
 const StackScreen = ({children, name, component, options}: StackScreenProps) => {
   const navigationContext = React.useContext(NavigationContext);
@@ -93,7 +97,7 @@ const StackScreen = ({children, name, component, options}: StackScreenProps) => 
 
   const navigation = {
     params: navigationContext.parameters ?? myRoute.parameters,
-    push: (screen, parameters) => {navigationContext.push(screen, parameters, name)},
+    push: (screen: string, parameters: any) => {navigationContext.push(screen, parameters, name)},
     pop: () => {navigationContext.pop()},
     getState: () => {return {routes: navigationContext.routes, params: navigationContext.parameters}}
   };
@@ -114,39 +118,88 @@ const StackScreen = ({children, name, component, options}: StackScreenProps) => 
 };
 
 const createNativeStackNavigator = () => {
-    return {}
+  return {}
 };
 
 type DrawerNavigatorProps = PropsWithChildren<{
-    drawerContent: any,
-    screenOptions: any,
+  drawerContent: any,
+  screenOptions: any,
 }>;
-type DrawerScreenProps = PropsWithChildren<{
-    name: string,
-    key: string,
-    component: ({ navigation, route }: { navigation: any; route: any; }) => JSX.Element,
-    options: ({navigation}: {navigation: any}) => any,
-}>;
-const createDrawerNavigator = () => {
+const DrawerNavigator = ({drawerContent, screenOptions, children} : DrawerNavigatorProps) => {
+  const navigationContext = React.useContext(NavigationContext);
+
   const navigation = {
-    getState: () => {return {routes: [], params: {}, routeNames: []}},
+    params: navigationContext.parameters,
+    navigate: (screen: string, parameters: any) => {
+      console.log("DrawerNavigator navigate to " + screen);
+      navigationContext.navigate(screen, parameters);
+    },
+    getState: () => {return {routeNames: navigationContext.routes, params: navigationContext.parameters}}
   };
 
+  const drawer = drawerContent({navigation});
+  return (
+    <View>
+      {drawer}
+      {React.Children.map(children, child => {
+        const name = child.props.name;
+        if (name !== navigationContext.currentScreen) {
+          return null;
+        }
+        return (
+          <View key={name} style={{alignItems: 'stretch'}}>
+            {child}
+          </View>
+        );
+      })}
+  </View>
+  );
+};
+
+type DrawerScreenProps = {
+  key: string,
+  name: string,
+  component: ({ navigation, route }: { navigation: any; route: any; }) => JSX.Element,
+};
+const DrawerScreen = ({key, name, component}: DrawerScreenProps) => {
+  const navigationContext = React.useContext(NavigationContext);
+
+  if (navigationContext.parameters === undefined) {
+    console.log(navigationContext);
+  }
+
+  let myRoute = navigationContext.routes.find((route) => route.name === name);
+
+  const navigation = {
+    params: navigationContext.parameters ?? myRoute.parameters,
+    navigate: (screen: string, parameters: any) => {
+      console.log("DrawerScreen navigate to " + screen);
+      navigationContext.navigate(screen, parameters ?? {});
+    },
+    getState: () => {return {routes: navigationContext.routes, params: navigationContext.parameters}}
+  };
+
+  const content = component({navigation: navigation, route: navigation});
+
+  return (
+    <View key={key}>
+      {content}
+    </View>
+  );
+};
+
+const createDrawerNavigator = () => {
   return {
     Navigator: ({drawerContent, screenOptions, children} : DrawerNavigatorProps) => {
-      const drawer = drawerContent({navigation});
       return (
-        <View>
+        <DrawerNavigator drawerContent={drawerContent} screenOptions={screenOptions}>
           {children}
-          {drawer}
-        </View>
+        </DrawerNavigator>
       );
     },
     Screen: ({component, name, key}: DrawerScreenProps) => {
       return (
-        <View key={key}>
-          {component({navigation: navigation, route: navigation})}
-        </View>
+        <DrawerScreen key={key} name={name} component={component} />
       )
     },
   }
