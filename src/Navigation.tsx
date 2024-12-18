@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {
   Animated,
   Easing,
+  Pressable,
   View,
   useAnimatedValue,
 } from 'react-native';
@@ -169,6 +170,16 @@ const DrawerNavigator = ({drawerContent, screenOptions, defaultStatus, children}
       }
     });
   }, [slideAnim, drawerDesiredOpen]);
+  // For animating the overlay
+  const fadeAnim = useAnimatedValue(0);
+  useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: drawerDesiredOpen ? 1 : 0,
+      easing: Easing.in(Easing.linear),
+      duration: drawerDesiredOpen ? 200 : 100,
+      useNativeDriver: true,
+    }).start();
+  }, [fadeAnim, drawerDesiredOpen]);
 
   const dispatch = (op: NavigationAction) => {
     switch (op.type) {
@@ -215,8 +226,31 @@ const DrawerNavigator = ({drawerContent, screenOptions, defaultStatus, children}
   return (
     <NavigationContext.Provider value={navigation}>
       <View>
-          <View style={{maxWidth: DEFAULT_DRAWER_WIDTH, position: 'absolute', zIndex: 1, height: '100%', width: '100%'}}>
-            <Animated.View style={{transform: [{translateX: slideAnim}]}}>
+          <View style={{
+            position: 'absolute',
+            zIndex: 1,
+            height: '100%',
+            width: '100%'}}>
+            { drawerIsOpen &&
+              <Animated.View
+                style={{opacity: fadeAnim}}>
+                <Pressable
+                  style={{
+                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                    height: '100%',
+                    width: '100%'}} 
+                    onPress={() => setDrawerDesiredOpen(false)}
+                    />
+              </Animated.View>
+            }
+            <Animated.View
+              style={{
+                position: 'absolute',
+                maxWidth: DEFAULT_DRAWER_WIDTH,
+                height: '100%',
+                width: '100%',
+                transform: [{translateX: slideAnim}]}}
+              >
               {drawer}
             </Animated.View>
           </View>
