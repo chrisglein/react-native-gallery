@@ -1,6 +1,9 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
+  Animated,
+  Easing,
   View,
+  useAnimatedValue,
 } from 'react-native';
 import type { PropsWithChildren } from 'react';
 
@@ -61,7 +64,7 @@ const NavigationContainer = ({children}: NavigationContainerProps) => {
       setParameters(parameters);
     },
     dispatch: (op: () => void) => {
-      console.log('unhandled dispatch', op);
+      console.warn('unhandled dispatch', op);
     },
     getState: () => {return {routes: routes, routeNames: routes, params: parameters}},
     currentScreen: currentScreen,
@@ -137,31 +140,56 @@ const createNativeStackNavigator = () => {
 type DrawerNavigatorProps = PropsWithChildren<{
   drawerContent: any,
   screenOptions: any,
+  defaultStatus: string,
 }>;
-const DrawerNavigator = ({drawerContent, screenOptions, children} : DrawerNavigatorProps) => {
+const DrawerNavigator = ({drawerContent, screenOptions, defaultStatus, children} : DrawerNavigatorProps) => {
   const navigationContext = React.useContext(NavigationContext);
+  
+  // Separately keep track of whether the drawer is open (visible) and whether it wants to be 
+  // (toggle state) so that the animation can only hide the content when it's done sliding out of view
+  const [drawerDesiredOpen, setDrawerDesiredOpen] = React.useState(defaultStatus === 'open');
   const [drawerIsOpen, setDrawerIsOpen] = React.useState(false);
+
+  // Drawer slide animation
+  const DEFAULT_DRAWER_WIDTH = 360;
+  const slideAnim = useAnimatedValue(0);
+  useEffect(() => {
+    if (drawerDesiredOpen) {
+      setDrawerIsOpen(true);
+    }
+    Animated.timing(slideAnim, {
+      toValue: drawerDesiredOpen ? 0 : -DEFAULT_DRAWER_WIDTH,
+      easing: Easing.in(Easing.linear),
+      duration: 200,
+      useNativeDriver: true,
+    }).start(() => {
+      // Only when the animation is completed should we actually hide the content
+      if (!drawerDesiredOpen) {
+        setDrawerIsOpen(false);
+      }
+    });
+  }, [slideAnim, drawerDesiredOpen]);
 
   const dispatch = (op: NavigationAction) => {
     switch (op.type) {
       case 'OPEN_DRAWER':
-        setDrawerIsOpen(true);
+        setDrawerDesiredOpen(true);
         return true;
       case 'CLOSE_DRAWER':
-        setDrawerIsOpen(false);
+        setDrawerDesiredOpen(false);
         return true;
       case 'TOGGLE_DRAWER':
-        setDrawerIsOpen(!drawerIsOpen);
+        setDrawerDesiredOpen(!drawerIsOpen);
         return true;
     }
     return false;
   };
 
+  // Extend the navigation context with drawer-specific functions
   const navigation = {
     ...navigationContext,
     params: navigationContext.parameters,
     navigate: (screen: string, parameters: any) => {
-      console.log("DrawerNavigator navigate to " + screen);
       navigationContext.navigate(screen, parameters);
     },
     dispatch: (op: NavigationAction) => {
@@ -176,19 +204,21 @@ const DrawerNavigator = ({drawerContent, screenOptions, children} : DrawerNaviga
         drawerIsOpen: drawerIsOpen,
       }
     },
-    openDrawer: () => {setDrawerIsOpen(true)},
-    closeDrawer: () => {setDrawerIsOpen(false)},
+    openDrawer: () => {setDrawerDesiredOpen(true)},
+    closeDrawer: () => {setDrawerDesiredOpen(false)},
   }
 
+  // Create the drawer content
   const drawer = drawerIsOpen && drawerContent({navigation});
-  const DEFAULT_DRAWER_WIDTH = 360;
 
   return (
     <NavigationContext.Provider value={navigation}>
-      <View style={{flexDirection: 'row'}}>
-        <View style={{maxWidth: DEFAULT_DRAWER_WIDTH, position: 'absolute', zIndex: 1}}>
-          {drawerIsOpen && drawer}
-        </View>
+      <View>
+          <View style={{maxWidth: DEFAULT_DRAWER_WIDTH, position: 'absolute', zIndex: 1, height: '100%', width: '100%'}}>
+            <Animated.View style={{transform: [{translateX: slideAnim}]}}>
+              {drawer}
+            </Animated.View>
+          </View>
         {React.Children.map(children, child => {
           const name = child.props.name;
           if (name !== navigationContext.currentScreen) {
@@ -213,19 +243,7 @@ type DrawerScreenProps = {
 const DrawerScreen = ({key, name, component}: DrawerScreenProps) => {
   const navigationContext = React.useContext(NavigationContext);
 
-  let myRoute = navigationContext.routes.find((route) => route.name === name);
-
-  const navigation = {
-    params: navigationContext.parameters ?? myRoute.parameters,
-    navigate: (screen: string, parameters: any) => {
-      console.log("DrawerScreen navigate to " + screen);
-      navigationContext.navigate(screen, parameters ?? {});
-    },
-    dispatch: (op: NavigationAction) => { navigationContext.dispatch(op); },
-    getState: () => {return navigationContext.getState();}
-  };
-
-  const content = component({navigation: navigation, route: navigation});
+  const content = component({navigation: navigationContext, route: navigationContext});
 
   return (
     <View key={key}>
@@ -236,9 +254,9 @@ const DrawerScreen = ({key, name, component}: DrawerScreenProps) => {
 
 const createDrawerNavigator = () => {
   return {
-    Navigator: ({drawerContent, screenOptions, children} : DrawerNavigatorProps) => {
+    Navigator: ({drawerContent, screenOptions, defaultStatus, children} : DrawerNavigatorProps) => {
       return (
-        <DrawerNavigator drawerContent={drawerContent} screenOptions={screenOptions}>
+        <DrawerNavigator drawerContent={drawerContent} screenOptions={screenOptions} defaultStatus={defaultStatus}>
           {children}
         </DrawerNavigator>
       );
