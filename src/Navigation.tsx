@@ -191,6 +191,7 @@ const DrawerNavigator = ({drawerContent, screenOptions, defaultStatus, children}
     params: navigationContext.parameters,
     navigate: (screen: string, parameters: any) => {
       navigationContext.navigate(screen, parameters);
+      setDrawerDesiredOpen(false);
     },
     dispatch: (op: NavigationAction) => {
       if (!dispatch(op)) {
