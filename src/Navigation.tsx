@@ -4,10 +4,17 @@ import {
 } from 'react-native';
 import type { PropsWithChildren } from 'react';
 
+type NavigationAction = {
+  type: string,
+  payload?: any,
+}
+
 type NavigationContextType = {
   push: (screen: string, parameters : any, navigateFrom: string) => void,
   pop: () => void,
   navigate: (screen: string, parameters : any) => void,
+  dispatch: (op: NavigationAction) => void,
+  getState: () => any,
   currentScreen: string,
   routes: any[],
   parameters: any,
@@ -16,6 +23,8 @@ const NavigationContext = React.createContext<NavigationContextType>({
   push: () => {},
   pop: () => {},
   navigate: () => {},
+  dispatch: () => {},
+  getState: () => {},
   currentScreen: '',
   routes: [],
   parameters: [],
@@ -50,6 +59,9 @@ const NavigationContainer = ({children}: NavigationContainerProps) => {
       setRoutes([...routes, {name: screen, key: screen, params: parameters}]);
       setCurrentScreen(screen);
       setParameters(parameters);
+    },
+    dispatch: (op: () => void) => {
+      console.log('unhandled dispatch', op);
     },
     currentScreen: currentScreen,
     routes: routes,
@@ -127,6 +139,22 @@ type DrawerNavigatorProps = PropsWithChildren<{
 }>;
 const DrawerNavigator = ({drawerContent, screenOptions, children} : DrawerNavigatorProps) => {
   const navigationContext = React.useContext(NavigationContext);
+  const [drawerIsOpen, setDrawerIsOpen] = React.useState(false);
+
+  const dispatch = (op: NavigationAction) => {
+    switch (op.type) {
+      case 'OPEN_DRAWER':
+        setDrawerIsOpen(true);
+        return true;
+      case 'CLOSE_DRAWER':
+        setDrawerIsOpen(false);
+        return true;
+      case 'TOGGLE_DRAWER':
+        setDrawerIsOpen(!drawerIsOpen);
+        return true;
+    }
+    return false;
+  };
 
   const navigation = {
     params: navigationContext.parameters,
@@ -134,25 +162,48 @@ const DrawerNavigator = ({drawerContent, screenOptions, children} : DrawerNaviga
       console.log("DrawerNavigator navigate to " + screen);
       navigationContext.navigate(screen, parameters);
     },
+    dispatch: (op: NavigationAction) => { navigationContext.dispatch(op); },
     getState: () => {return {routeNames: navigationContext.routes, params: navigationContext.parameters}}
   };
 
+  const innerNavigationContext = {
+    ...navigationContext,
+    dispatch: (op: NavigationAction) => {
+      if (!dispatch(op)) {
+        navigationContext.dispatch(op);
+      }
+    },
+    getState: () => {
+      let state = navigation.getState();
+      return {
+        ...state,
+        drawerIsOpen: drawerIsOpen,
+      }
+    }
+  }
+
   const drawer = drawerContent({navigation});
   return (
-    <View>
-      {drawer}
-      {React.Children.map(children, child => {
-        const name = child.props.name;
-        if (name !== navigationContext.currentScreen) {
-          return null;
-        }
-        return (
-          <View key={name} style={{alignItems: 'stretch'}}>
-            {child}
+    <NavigationContext.Provider value={innerNavigationContext}>
+      <View>
+        {React.Children.map(children, child => {
+          const name = child.props.name;
+          if (name !== navigationContext.currentScreen) {
+            return null;
+          }
+          return (
+            <View key={name} style={{alignItems: 'stretch'}}>
+              {child}
+            </View>
+          );
+        })}
+        {drawerIsOpen && 
+          <View style={{backgroundColor: 'red', width: 100, height: 200, position: 'absolute'}}>
+            {drawer}
           </View>
-        );
-      })}
-  </View>
+        }
+      </View>
+    </NavigationContext.Provider>
   );
 };
 
@@ -164,10 +215,6 @@ type DrawerScreenProps = {
 const DrawerScreen = ({key, name, component}: DrawerScreenProps) => {
   const navigationContext = React.useContext(NavigationContext);
 
-  if (navigationContext.parameters === undefined) {
-    console.log(navigationContext);
-  }
-
   let myRoute = navigationContext.routes.find((route) => route.name === name);
 
   const navigation = {
@@ -176,7 +223,8 @@ const DrawerScreen = ({key, name, component}: DrawerScreenProps) => {
       console.log("DrawerScreen navigate to " + screen);
       navigationContext.navigate(screen, parameters ?? {});
     },
-    getState: () => {return {routes: navigationContext.routes, params: navigationContext.parameters}}
+    dispatch: (op: NavigationAction) => { navigationContext.dispatch(op); },
+    getState: () => {return navigationContext.getState();}
   };
 
   const content = component({navigation: navigation, route: navigation});
@@ -206,7 +254,7 @@ const createDrawerNavigator = () => {
 }
 
 const getDrawerStatusFromState = (state: any) => {
-  return undefined;
+  return state.drawerIsOpen ? 'open' : 'closed';
 }
 
 const useIsFocused = () => {
@@ -237,13 +285,14 @@ const Theme = {
 }
 
 const useNavigation = () => {
-  return {push: () => {}, pop: () => {}};
+  const navigationContext = React.useContext(NavigationContext);
+  return navigationContext;
 }
 
 const DrawerActions = {
-  openDrawer: () => {},
-  closeDrawer: () => {},
-  toggleDrawer: () => {},
+  openDrawer: () => {console.log('openDrawer'); return { type: 'OPEN_DRAWER' }},
+  closeDrawer: () => {console.log('closeDrawer'); return { type: 'CLOSE_DRAWER' }},
+  toggleDrawer: () => {console.log('toggleDrawer'); return { type: 'TOGGLE_DRAWER' }}
 }
 
 export { NavigationContainer, StackNavigator, StackScreen, createNativeStackNavigator, createDrawerNavigator, getDrawerStatusFromState, useIsFocused, useTheme, Theme, useNavigation, DrawerActions };
