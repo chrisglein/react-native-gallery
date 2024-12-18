@@ -186,7 +186,7 @@ const DrawerNavigator = ({drawerContent, screenOptions, children} : DrawerNaviga
   return (
     <NavigationContext.Provider value={navigation}>
       <View style={{flexDirection: 'row'}}>
-        <View style={{maxWidth: DEFAULT_DRAWER_WIDTH}}>
+        <View style={{maxWidth: DEFAULT_DRAWER_WIDTH, position: 'absolute', zIndex: 1}}>
           {drawerIsOpen && drawer}
         </View>
         {React.Children.map(children, child => {
