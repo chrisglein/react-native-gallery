@@ -63,6 +63,7 @@ const NavigationContainer = ({children}: NavigationContainerProps) => {
     dispatch: (op: () => void) => {
       console.log('unhandled dispatch', op);
     },
+    getState: () => {return {routes: routes, routeNames: routes, params: parameters}},
     currentScreen: currentScreen,
     routes: routes,
     parameters: parameters,
@@ -157,35 +158,37 @@ const DrawerNavigator = ({drawerContent, screenOptions, children} : DrawerNaviga
   };
 
   const navigation = {
+    ...navigationContext,
     params: navigationContext.parameters,
     navigate: (screen: string, parameters: any) => {
       console.log("DrawerNavigator navigate to " + screen);
       navigationContext.navigate(screen, parameters);
     },
-    dispatch: (op: NavigationAction) => { navigationContext.dispatch(op); },
-    getState: () => {return {routeNames: navigationContext.routes, params: navigationContext.parameters}}
-  };
-
-  const innerNavigationContext = {
-    ...navigationContext,
     dispatch: (op: NavigationAction) => {
       if (!dispatch(op)) {
         navigationContext.dispatch(op);
       }
     },
     getState: () => {
-      let state = navigation.getState();
+      let state = navigationContext.getState();
       return {
         ...state,
         drawerIsOpen: drawerIsOpen,
       }
-    }
+    },
+    openDrawer: () => {setDrawerIsOpen(true)},
+    closeDrawer: () => {setDrawerIsOpen(false)},
   }
 
-  const drawer = drawerContent({navigation});
+  const drawer = drawerIsOpen && drawerContent({navigation});
+  const DEFAULT_DRAWER_WIDTH = 360;
+
   return (
-    <NavigationContext.Provider value={innerNavigationContext}>
-      <View>
+    <NavigationContext.Provider value={navigation}>
+      <View style={{flexDirection: 'row'}}>
+        <View style={{maxWidth: DEFAULT_DRAWER_WIDTH}}>
+          {drawerIsOpen && drawer}
+        </View>
         {React.Children.map(children, child => {
           const name = child.props.name;
           if (name !== navigationContext.currentScreen) {
@@ -197,11 +200,6 @@ const DrawerNavigator = ({drawerContent, screenOptions, children} : DrawerNaviga
             </View>
           );
         })}
-        {drawerIsOpen && 
-          <View style={{backgroundColor: 'red', width: 100, height: 200, position: 'absolute'}}>
-            {drawer}
-          </View>
-        }
       </View>
     </NavigationContext.Provider>
   );
